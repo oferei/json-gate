@@ -28,24 +28,34 @@ var schemaInappropriateType = {
 vows.describe('Sync-Async').addBatch({
 	'when calling synchronously and expecting no error': {
 		topic: function () {
+			try {
+				var result = jsonly(emptyObject, schemaEmptyObject);
+				this.callback(null, result);
+			} catch(err) {
+				this.callback(err);
+			}
 			var result = jsonly(emptyObject, schemaEmptyObject);
-			this.callback(null, result);
 		},
 		'we get back the object': function (err, result) {
+			should.not.exist(err);
 			should.exist(result);
-			result.should.not.be.an.instanceof(Error);
 			result.should.eql(emptyObject);
 		}
 	}
 }).addBatch({
 	'when calling synchronously and expecting an error': {
 		topic: function () {
-			var result = jsonly(emptyObject, schemaInvalidType);
-			this.callback(null, result);
+			try {
+				var result = jsonly(emptyObject, schemaInvalidType);
+				this.callback(null, result);
+			} catch(err) {
+				this.callback(err);
+			}
 		},
 		'we get the error': function (err, result) {
-			should.exist(result);
-			result.should.be.an.instanceof(SyntaxError);
+			should.exist(err);
+			should.not.exist(result);
+			err.should.be.an.instanceof(SyntaxError);
 		}
 	}
 }).addBatch({
@@ -67,6 +77,7 @@ vows.describe('Sync-Async').addBatch({
 		'we get the error': function (err, result) {
 			should.exist(err);
 			should.not.exist(result);
+			err.should.be.an.instanceof(SyntaxError);
 		}
 	}
 }).export(module);
