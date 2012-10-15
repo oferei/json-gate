@@ -202,8 +202,18 @@ function validateNumber(obj, schema, names) {
 			throw new RangeError(getName(names) + ' is ' + obj + ' when it should be ' + (exclusive ? 'less than' : 'at most') + ' ' + schema.maximum);
 		}
 	}
-	
-	// TODO: divisibleBy
+
+	if (schema.divisibleBy !== undefined) {
+		if (!isOfType(schema.divisibleBy, 'number')) {
+			throw new SyntaxError(getName(names) + ' schema divisibleBy must be a number');
+		}
+		if (schema.divisibleBy === 0) {
+			throw new SyntaxError(getName(names) + ' schema divisibleBy must not be 0');
+		}
+		if (!isOfType(obj / schema.divisibleBy, 'integer')) {
+			throw new RangeError(getName(names) + ' is ' + obj + ' when it should be divisible by ' + schema.divisibleBy);
+		}
+	}
 };
 
 function validateString(obj, schema, names) {
@@ -266,9 +276,9 @@ function validateSchema(obj, schema, names) {
 // * Asynchronous - done callback is provided. will not throw error.
 //        will call callback with error as first parameter and object as second
 // Errors:
-// * SyntaxError if schema syntax is invalid
 // * TypeError if object/property is missing or is the wrong type
 // * RangeError if object value is outside of its valid range
+// * SyntaxError if schema syntax is invalid
 // * Error in the unthinkable event of a bug  ;)
 module.exports = function(obj, schema, done) {
 	try {

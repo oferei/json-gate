@@ -93,6 +93,26 @@ var schemaIncorrectExclusiveMaximum = {
 	}
 };
 
+var schemaCorrectDivisibleBy = {
+	type: 'object',
+	properties: {
+		n: {
+			type: 'number',
+			divisibleBy: 36
+		}
+	}
+};
+
+var schemaIncorrectDivisibleBy = {
+	type: 'object',
+	properties: {
+		n: {
+			type: 'number',
+			divisibleBy: 17
+		}
+	}
+};
+
 vows.describe('Number').addBatch({
 	'when complies with minimum': {
 		topic: function () {
@@ -166,6 +186,26 @@ vows.describe('Number').addBatch({
 	'when exceeds exclusive maximum': {
 		topic: function () {
 			jsonly(obj, schemaIncorrectExclusiveMaximum, this.callback);
+		},
+		'we get a RangeError': function (err, result) {
+			should.exist(err);
+			err.should.be.an.instanceof(RangeError);
+			console.log('Error:', err)
+		}
+	}
+}).addBatch({
+	'when divisible by given divisor': {
+		topic: function () {
+			jsonly(obj, schemaCorrectDivisibleBy, this.callback);
+		},
+		'we get no error': function (err, result) {
+			should.not.exist(err);
+		}
+	}
+}).addBatch({
+	'when not divisible by given divisor': {
+		topic: function () {
+			jsonly(obj, schemaIncorrectDivisibleBy, this.callback);
 		},
 		'we get a RangeError': function (err, result) {
 			should.exist(err);
