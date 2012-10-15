@@ -27,7 +27,7 @@
   ],
   "main": "jsonly.js",
   "scripts": {
-    "test": "node_modules\\.bin\\vows --spec test/basic-test.js"
+    "test": "node_modules\\.bin\\vows --spec"
   },
   "engines": {
     "node": "*"
