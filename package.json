@@ -1,0 +1,35 @@
+{
+  "name": "jsonly",
+  "description": "JSON schema validator",
+  "version": "0.0.1",
+  "private": true,
+  "author": {
+    "name": "Ofer Reichman",
+    "email": "oferei@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Ofer Reichman",
+      "email": "oferei@gmail.com"
+    }
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+    "should": "*",
+    "vows": "*"
+  },
+  "keywords": [
+    "json",
+    "schema",
+    "assert",
+    "validate"
+  ],
+  "main": "jsonly.js",
+  "scripts": {
+    "test": "node_modules\\.bin\\vows --spec test/basic-test.js"
+  },
+  "engines": {
+    "node": "*"
+  }
+}
