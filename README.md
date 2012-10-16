@@ -7,8 +7,8 @@ For example, a server can use it to ensure input received from a client conforms
 The JSON schema can also help with documentation and collaboration. Copy it to your API document and everybody should understand exactly what is expected.
 
 _jsonly_ is extremely easy to use:
-* A single function call
-* Both synchronous and asynchronous modes
+* Intuitive - one function to create a schema, one function to use it
+* Both synchronous and asynchronous modes - your choice
 * Conforms to standard - no surprises
 * Well documented, in case you don't feel like digging into the IETF specifications
 
@@ -23,7 +23,7 @@ _jsonly_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft
 
 ## Example
 
-    var schema = {
+    var schema = jsonly.createSchema({
     	type: 'object',
     	properties: {
     		query: {
@@ -37,12 +37,11 @@ _jsonly_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft
     			default: 10
     		}
     	}
-    };
+    });
 
-    try {
-    	jsonly(input, schema);
-    } catch(err) {
-    	return res.send(400, err.message); // 400 Bad Request
+    err = schema.validate(input);
+    if (err) {
+    	return res.send(400, err); // 400 Bad Request
     }
 
 ## Installation

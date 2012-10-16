@@ -3,11 +3,11 @@
 var vows = require('vows'),
 	should = require('should');
 
-var jsonly = require('..');
+var jsonly = require('..'),
+	createSchema = jsonly.createSchema,
+	config = require('./config');
 
 var emptyObject = {};
-
-var emptyArray = []
 
 var schemaEmptyObject = {
 	type: 'object'
@@ -17,24 +17,16 @@ var schemaEmptyArray = {
 	type: 'array'
 };
 
-var schemaInvalidType = {
-	type: 123
-};
-
-var schemaInappropriateType = {
-	type: 'string'
-};
-
 vows.describe('Sync-Async').addBatch({
-	'when calling synchronously and expecting no error': {
+	'when calling synchronously with a valid object': {
 		topic: function () {
+			var schema = createSchema(schemaEmptyObject);
 			try {
-				var result = jsonly(emptyObject, schemaEmptyObject);
-				this.callback(null, result);
+				schema.validate(emptyObject);
+				this.callback(null);
 			} catch(err) {
 				this.callback(err);
 			}
-			var result = jsonly(emptyObject, schemaEmptyObject);
 		},
 		'we get back nothing': function (err, result) {
 			should.not.exist(err);
@@ -42,25 +34,29 @@ vows.describe('Sync-Async').addBatch({
 		}
 	}
 }).addBatch({
-	'when calling synchronously and expecting an error': {
+	'when calling synchronously with an invalid object': {
 		topic: function () {
+			var schema = createSchema(schemaEmptyArray);
 			try {
-				var result = jsonly(emptyObject, schemaInvalidType);
-				this.callback(null, result);
+				schema.validate(emptyObject);
+				this.callback(null, emptyObject);
 			} catch(err) {
 				this.callback(err);
 			}
 		},
-		'we get the error': function (err, result) {
+		'we get an error': function (err, result) {
 			should.exist(err);
 			should.not.exist(result);
-			err.should.be.an.instanceof(SyntaxError);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
 		}
 	}
 }).addBatch({
-	'when calling asynchronously and expecting no error': {
+	'when calling asynchronously with a valid object': {
 		topic: function () {
-			var result = jsonly(emptyObject, schemaEmptyObject, this.callback);
+			var schema = createSchema(schemaEmptyObject);
+			schema.validate(emptyObject, this.callback);
 		},
 		'we get back the object': function (err, result) {
 			should.not.exist(err);
@@ -69,14 +65,17 @@ vows.describe('Sync-Async').addBatch({
 		}
 	}
 }).addBatch({
-	'when calling asynchronously and expecting an error': {
+	'when calling asynchronously with an invalid object': {
 		topic: function () {
-			var result = jsonly(emptyObject, schemaInvalidType, this.callback);
+			var schema = createSchema(schemaEmptyArray);
+			schema.validate(emptyObject, this.callback);
 		},
-		'we get the error': function (err, result) {
+		'we get an error': function (err, result) {
 			should.exist(err);
 			should.not.exist(result);
-			err.should.be.an.instanceof(SyntaxError);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
 		}
 	}
 }).export(module);
