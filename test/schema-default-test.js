@@ -28,7 +28,7 @@ var schemaInvalidDefault = {
 };
 
 vows.describe('Schema Default').addBatch({
-	'when default matches type': {
+	'when default value has correct type': {
 		topic: function () {
 			try {
 				this.callback(null, createSchema(schemaValidDefault));
@@ -42,7 +42,7 @@ vows.describe('Schema Default').addBatch({
 		}
 	}
 }).addBatch({
-	'when default does not match type': {
+	'when default value has incorrect type': {
 		topic: function () {
 			try {
 				this.callback(null, createSchema(schemaInvalidDefault));

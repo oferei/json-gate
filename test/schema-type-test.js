@@ -102,7 +102,7 @@ var schemaUnionTypeWithInvalidSchema = {
 };
 
 vows.describe('Schema Type').addBatch({
-	'when types attributes are simple types': {
+	'when attributes are all simple types': {
 		topic: function () {
 			try {
 				this.callback(null, createSchema(schemaValid));
@@ -116,7 +116,7 @@ vows.describe('Schema Type').addBatch({
 		}
 	}
 }).addBatch({
-	'when type attribute is neither a string nor an array': {
+	'when attribute is neither a string nor an array': {
 		topic: function () {
 			try {
 				this.callback(null, createSchema(schemaInvalid));
@@ -132,7 +132,7 @@ vows.describe('Schema Type').addBatch({
 		}
 	}
 }).addBatch({
-	'when type attribute is a union type with simple types': {
+	'when attribute is a union type with simple types': {
 		topic: function () {
 			try {
 				this.callback(null, createSchema(schemaSimpleUnionType));
@@ -146,7 +146,7 @@ vows.describe('Schema Type').addBatch({
 		}
 	}
 }).addBatch({
-	'when type attribute is a union type with only one simple type': {
+	'when attribute is a union type with only one simple type': {
 		topic: function () {
 			try {
 				this.callback(null, createSchema(schemaInvalidUnionTypeWithOnlyOne));
@@ -162,7 +162,7 @@ vows.describe('Schema Type').addBatch({
 		}
 	}
 }).addBatch({
-	'when type attribute is a union type with a valid schema': {
+	'when attribute is a union type with a valid schema': {
 		topic: function () {
 			try {
 				this.callback(null, createSchema(schemaUnionTypeWithValidSchema));
@@ -176,7 +176,7 @@ vows.describe('Schema Type').addBatch({
 		}
 	}
 }).addBatch({
-	'when type attribute is a union type with an invalid schema': {
+	'when attribute is a union type with an invalid schema': {
 		topic: function () {
 			try {
 				this.callback(null, createSchema(schemaUnionTypeWithInvalidSchema));
