@@ -202,6 +202,24 @@ This attribute indicates that all items in an array instance must be unique (con
 
 Not supported yet.
 
+### minLength
+
+Applies only to instances of type `'string'`.
+
+Defines the minimum length of the string.
+
+### maxLength
+
+Applies only to instances of type `'string'`.
+
+Defines the maximum length of the string.
+
+### pattern
+
+Applies only to instances of type `'string'`.
+
+Not supported yet.
+
 ### minimum
 
 Applies only to instances of type `'number'`.
@@ -240,24 +258,6 @@ Applies only to instances of type `'number'`.
 
 Defines what value the number instance must be divisible by with no remainder.
 This value may not be 0.
-
-### minLength
-
-Applies only to instances of type `'string'`.
-
-Defines the minimum length of the string.
-
-### maxLength
-
-Applies only to instances of type `'string'`.
-
-Defines the maximum length of the string.
-
-### pattern
-
-Applies only to instances of type `'string'`.
-
-Not supported yet.
 
 ### format
 
