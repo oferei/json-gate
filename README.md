@@ -54,88 +54,200 @@ _jsonly_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft
 
 ## Usage
 
-The first call is to _jsonly.createSchema_, which gets a JSON Schema definition and creates a new _Schema_ object.
-This function may throw an error if the JSON Schema is malformed.
+### _jsonly.createSchema_(jsonSchema)
+
+This function gets a JSON Schema definition and returns a new _Schema_ object.
+It may throw an error if the JSON Schema definition is malformed.
 The error message will describe exactly what part is invalid.
 
-The second call is to _Schema.validate_, which gets an object and validates it.
-This function returns/throws the first encountered error, if any.
-The input object may be edited _in-place_ if the _default_ attribute is used.
+### _Schema.validate_(jsonObject)
+
+This function gets a JSON object and validates it.
+If the JSON object does not conform to the schema, an error is thrown (or returned, see _Synchronous/Asynchronous_ below).
+Be aware that the input JSON object may be edited _in-place_ if the _default_ attribute is used.
 
 ### Errors
 
 The error messages are human-friendly and detailed.
-For example, "JSON object property 'user.password': length is 3 when it should be at least 6".
+For example: "JSON object property 'user.password': length is 3 when it should be at least 6".
 Ready to be shrink-wrapped and shipped in a 400 Bad Request response!
 
 ### Synchronous/Asynchronous
 
-_Schema.validate_ can be used in both ways, as you prefer.
-
-_Schema.validate_ may be called synchronously, as in the example above, with two parameters.
+_Schema.validate_ can be called in two ways, to suit your preference.
+* Synchronously - as in the example above, with two parameters.
 It returns nothing if ok. Otherwise it throws an error.
+* Asynchronously - by providing a third parameter: a callback function.
+The callback function gets two arguments: error and result (the original JSON object, which may be modified).
 
-_Schema.validate_ may also be called asynchronously by providing a 3rd parameter - a callback function.
-The callback function gets two arguments: error and result (the original object, which may be modified).
+It should be noted that the JSON object passed to the callback function is the same as the input JSON object.
+It is only passed for convenience.
+Any _default_ values used will affect the original JSON object, even when calling asynchronously.
 
 ## Hello schema
 
-A _schema_ is defined as a JavaScript object containing various _attributes_.
+A _JSON schema_ is defined as a JavaScript object containing various _attributes_.
 
 Let's start by analyzing the schema given in the example above.
-* The top type is an object (as opposed to an array)
-* It should have a property named _query_, which should be a string with between 1 and 64 characters
+* The JSON object should be an object (as opposed to an array)
+* It should have a property named _query_, which should be a string with 1 to 64 characters
 * It may optionaly have a property named _maxResults_, which should be an integer with a maximum value of 20
 * If _maxResults_ is missing, it will be generated with a value of 10
 
 See Attributes section below to learn about more possibilities.
 
 JSON Schema has recursive capabilities. Objects and arrays include other attributes, which may be objects and arrays.
+Notice that objects properties are unordered, whereas array items are ordered.
 
 ## Attributes
 
 Below are all the supported attributes.
 
+Terminology: for this specification, *instance* refers to a JSON value (object or property) that the schema will be describing and validating.
+
 ### type
 
-Defines the expected type of the object or property. Simple types: string, number, integer, boolean, object, array, null, any.
+Defines the expected instance type.
+
+It may be one of the simple type: 'string', 'number', 'integer', 'boolean', 'object', 'array', 'null' or 'any'.
+
+Alternatively _type_ may be an array of simple types and/or schemas. In this case the instance type should be one of the types in the array.
+For example, if _type_ is ['string', 'null'] then the instance may be either a string or null.
 
 The default is 'any'.
-The top level type must be either 'object' or 'array'.
-
-The _type_ may alternatively be an array of simple types or schemas. In this case the object should be one of the types in the array.
-For example, if _type_ is ['string', 'null'] then the object may be either a string or null.
+The top level _type_ must be either 'object' or 'array'.
 
 ### required
 
-(array)
-items
-minItems
-maxItems
-uniqueItems
+A boolean indicating whether an instance is mandatory (true) or optional (false).
 
-(object)
-properties
-patternProperties
-additionalProperties
-dependencies
+The default is false (=optional).
 
-(number)
-minimum
-exclusiveMinimum
-maximum
-exclusiveMaximum
-divisibleBy
+### default
 
-(string)
-minLength
-maxLength
-pattern
+TBD
 
-(item)
-format
-default
+### properties
 
-(any)
-enum
-disallow
+Applies only to instances of type 'object'.
+
+Defines the properties of the instance object.
+Properties are considered unordered, the order of the instance properties may be in any order.
+
+The default is an empty object.
+
+### patternProperties
+
+Applies only to instances of type 'object'.
+
+Not supported yet.
+
+### additionalProperties
+
+Applies only to instances of type 'object'.
+
+Not supported yet.
+Behavior is as if it is the default value, an empty schema, which means that
+additional properties that are not defined by the _properties_ are allowed.
+
+### dependencies
+
+Applies only to instances of type 'object'.
+
+Not supported yet.
+
+### items
+
+Applies only to instances of type 'array'.
+
+Defines the items of the instance array.
+
+It may be a schema, in which case all the items in the array must be valid according to the schema.
+
+Alternatively _items_ may be an array of schemas.
+In this case each position in the instance array must conform to the schema in the corresponding position for this array.
+Additional items are allowed, disallowed, or constrained by the _additionalItems_ attribute.
+
+### additionalItems
+
+Applies only to instances of type 'array'.
+
+TBD
+
+### minItems
+
+Applies only to instances of type 'array'.
+
+TBD
+
+### maxItems
+
+Applies only to instances of type 'array'.
+
+TBD
+
+### uniqueItems
+
+Applies only to instances of type 'array'.
+
+Not supported yet.
+
+### minimum
+
+Applies only to instances of type 'number'.
+
+TBD
+
+### exclusiveMinimum
+
+Applies only to instances of type 'number'.
+
+TBD
+
+### maximum
+
+Applies only to instances of type 'number'.
+
+TBD
+
+### exclusiveMaximum
+
+Applies only to instances of type 'number'.
+
+TBD
+
+### divisibleBy
+
+Applies only to instances of type 'number'.
+
+TBD
+
+### minLength
+
+Applies only to instances of type 'string'.
+
+TBD
+
+### maxLength
+
+Applies only to instances of type 'string'.
+
+TBD
+
+### pattern
+
+Applies only to instances of type 'string'.
+
+TBD
+
+### format
+
+Not supported yet.
+
+### enum
+
+Not supported yet.
+
+### disallow
+
+Not supported yet.
