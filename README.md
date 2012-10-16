@@ -63,7 +63,8 @@ The error message will describe exactly what part is invalid.
 ### _Schema.validate_(jsonObject)
 
 This function gets a JSON object and validates it.
-If the JSON object does not conform to the schema, an error is thrown (or returned, see _Synchronous/Asynchronous_ below).
+If the JSON object does not conform to the schema an error will be thrown (or returned, see _Synchronous/Asynchronous_ below).
+The function does not return a value.
 Be aware that the input JSON object may be edited _in-place_ if the _default_ attribute is used.
 
 ### Errors
@@ -74,10 +75,10 @@ Ready to be shrink-wrapped and shipped in a 400 Bad Request response!
 
 ### Synchronous/Asynchronous
 
-_Schema.validate_ can be called in two ways, to suit your preference.
-* Synchronously - as in the example above, with two parameters.
-It returns nothing if ok. Otherwise it throws an error.
-* Asynchronously - by providing a third parameter: a callback function.
+_Schema.validate_ can be called in two ways, to suit your needs:
+* Synchronously - as in the example above, with one parameter.
+As already stated, it returns nothing if the object checks out. Otherwise it throws an error.
+* Asynchronously - by providing a 2nd parameter: a callback function.
 The callback function gets two arguments: error and result (the original JSON object, which may be modified).
 
 It should be noted that the JSON object passed to the callback function is the same as the input JSON object.
@@ -94,10 +95,10 @@ Let's start by analyzing the schema given in the example above.
 * It may optionaly have a property named _maxResults_, which should be an integer with a maximum value of 20
 * If _maxResults_ is missing, it will be generated with a value of 10
 
-See Attributes section below to learn about more possibilities.
-
-JSON Schema has recursive capabilities. Objects and arrays include other attributes, which may be objects and arrays.
+JSON Schema properties can be nested: objects and arrays include other attributes, which may be objects and arrays.
 Notice that objects properties are unordered, whereas array items are ordered.
+
+See Attributes section below to learn about more possibilities.
 
 ## Attributes
 
@@ -125,7 +126,7 @@ The default is false (=optional).
 
 ### default
 
-TBD
+Defines the default value of the instance when the instance is undefined.
 
 ### properties
 
@@ -147,7 +148,7 @@ Not supported yet.
 Applies only to instances of type 'object'.
 
 Not supported yet.
-Current behavior is as if this attribute was set to the default value, an empty schema,
+Current behavior is as if this attribute was set to the default, an empty schema,
 which means that additional properties that are not defined by the _properties_ attribute are allowed.
 
 ### dependencies
@@ -166,29 +167,38 @@ It may be a schema, in which case all the items in the array must be valid accor
 
 Alternatively _items_ may be an array of schemas.
 In this case each position in the instance array must conform to the schema in the corresponding position for this array.
-Additional items are allowed, disallowed, or constrained by the _additionalItems_ attribute.
+This is called tuple typing. When used, additional items are allowed, disallowed, or constrained by the _additionalItems_ attribute.
 
 ### additionalItems
 
-Applies only to instances of type 'array'.
+Applies only to instances of type 'array', and only together with the _items_ attribute.
 
-TBD
+If the _items_ attribute is an array of schemas (tuple typing) then
+_additionalItems_ dictates the behavior when the instance array is longer than _items_.
+
+_additionalItems_ may be a schema, in which case all the additional items must be valid according to the schema.
+
+Alternatively it may be false. In this case additional items are not allowed.
+
+The default is an empty schema, which allows additional items of any type.
 
 ### minItems
 
 Applies only to instances of type 'array'.
 
-TBD
+Defines the minimum number of values in an array.
 
 ### maxItems
 
 Applies only to instances of type 'array'.
 
-TBD
+Defines the maximum number of values in an array.
 
 ### uniqueItems
 
 Applies only to instances of type 'array'.
+
+This attribute indicates that all items in an array instance must be unique (contains no two identical values).
 
 Not supported yet.
 
@@ -196,49 +206,58 @@ Not supported yet.
 
 Applies only to instances of type 'number'.
 
-TBD
+Defines the minimum value of the instance property.
 
 ### exclusiveMinimum
 
-Applies only to instances of type 'number'.
+Applies only to instances of type 'number', and only together with the _minimum_ attribute.
 
-TBD
+Defines the behavior of the _minimum_ attribute:
+* when true, _minimum_ is exclusive ("greater than")
+* when false, _minimum_ is inclusive ("greater than or equal")
+
+The default is false.
 
 ### maximum
 
 Applies only to instances of type 'number'.
 
-TBD
+Defines the maximum value of the instance property.
 
 ### exclusiveMaximum
 
-Applies only to instances of type 'number'.
+Applies only to instances of type 'number', and only together with the _maximum_ attribute.
 
-TBD
+Defines the behavior of the _maximum_ attribute:
+* when true, _maximum_ is exclusive ("less than")
+* when false, _maximum_ is inclusive ("less than or equal")
+
+The default is false.
 
 ### divisibleBy
 
 Applies only to instances of type 'number'.
 
-TBD
+Defines what value the number instance must be divisible by with no remainder.
+This value may not be 0.
 
 ### minLength
 
 Applies only to instances of type 'string'.
 
-TBD
+Defines the minimum length of the string.
 
 ### maxLength
 
 Applies only to instances of type 'string'.
 
-TBD
+Defines the maximum length of the string.
 
 ### pattern
 
 Applies only to instances of type 'string'.
 
-TBD
+Not supported yet.
 
 ### format
 
