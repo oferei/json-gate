@@ -147,8 +147,8 @@ Not supported yet.
 Applies only to instances of type 'object'.
 
 Not supported yet.
-Behavior is as if it is the default value, an empty schema, which means that
-additional properties that are not defined by the _properties_ are allowed.
+Current behavior is as if this attribute was set to the default value, an empty schema,
+which means that additional properties that are not defined by the _properties_ attribute are allowed.
 
 ### dependencies
 
