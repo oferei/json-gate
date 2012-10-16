@@ -23,12 +23,15 @@ _jsonly_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft
 
 ## Example
 
-    var schema = jsonly.createSchema({
+    var createSchema = require('jsonly').createSchema;
+
+    var schema = createSchema({
     	type: 'object',
     	properties: {
     		query: {
     			type: 'string',
-    			maxLength: 32,
+                minLength: 1,
+                maxLength: 64,
     			required: true
     		},
     		maxResults: {
@@ -39,9 +42,10 @@ _jsonly_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft
     	}
     });
 
-    err = schema.validate(input);
-    if (err) {
-    	return res.send(400, err); // 400 Bad Request
+    try {
+        schema.validate(input);
+    } catch(err) {
+        return res.send(400, err); // 400 Bad Request
     }
 
 ## Installation
@@ -50,29 +54,28 @@ _jsonly_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft
 
 ## Usage
 
-_jsonly_ receives an object and a schema.
-It returns the first encountered error, if any.
-Input object may be edited _in-place_ if _default_ attributes are used.
+The first call is to _jsonly.createSchema_, which gets a JSON Schema definition and creates a new _Schema_ object.
+This function may throw an error if the JSON Schema is malformed.
+The error message will describe exactly what part is invalid.
+
+The second call is to _Schema.validate_, which gets an object and validates it.
+This function returns/throws the first encountered error, if any.
+The input object may be edited _in-place_ if the _default_ attribute is used.
 
 ### Errors
 
-The error message is user-friendly and detailed.
-For example, 'Property 'user.password' length is 3 when it should be at least 6'.
-Ready to be wrapped in a 400 Bad Request response!
-
-_jsonly_ throws the following errors:
-* _TypeError_ if object/property is missing or is the wrong type
-* _RangeError_ if object value is outside of its valid range
-* _SyntaxError_ if schema syntax is invalid
+The error messages are human-friendly and detailed.
+For example, "JSON object property 'user.password': length is 3 when it should be at least 6".
+Ready to be shrink-wrapped and shipped in a 400 Bad Request response!
 
 ### Synchronous/Asynchronous
 
-Your choice.
+_Schema.validate_ can be used in both ways, as you prefer.
 
-_jsonly_ may be called synchronously, as in the example above, with two parameters.
+_Schema.validate_ may be called synchronously, as in the example above, with two parameters.
 It returns nothing if ok. Otherwise it throws an error.
 
-_jsonly_ may also be called asynchronously by providing a 3rd parameter - a callback function.
+_Schema.validate_ may also be called asynchronously by providing a 3rd parameter - a callback function.
 The callback function gets two arguments: error and result (the original object, which may be modified).
 
 ## Hello schema
@@ -81,9 +84,9 @@ A _schema_ is defined as a JavaScript object containing various _attributes_.
 
 Let's start by analyzing the schema given in the example above.
 * The top type is an object (as opposed to an array)
-* It should have a property named _query_, which should be a string of up to 32 characters
+* It should have a property named _query_, which should be a string with between 1 and 64 characters
 * It may optionaly have a property named _maxResults_, which should be an integer with a maximum value of 20
-* If _maxResults_ is missing, it will be generated with the value 10
+* If _maxResults_ is missing, it will be generated with a value of 10
 
 See Attributes section below to learn about more possibilities.
 
