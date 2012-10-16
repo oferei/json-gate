@@ -109,28 +109,31 @@ Terminology: for this specification, *instance* refers to a JSON value (object o
 ### type
 
 Defines the expected instance type.
-
-It may be one of the simple type: 'string', 'number', 'integer', 'boolean', 'object', 'array', 'null' or 'any'.
-
-Alternatively _type_ may be an array of simple types and/or schemas. In this case the instance type should be one of the types in the array.
+It can take one of two forms:
+* Simple type - any of the following: 'string', 'number', 'integer', 'boolean', 'object', 'array', 'null' or 'any'.
+* Union type - an array of simple types and/or schemas. The instance type should be one of the types in the array.
 For example, if _type_ is ['string', 'null'] then the instance may be either a string or null.
 
 The default is 'any'.
-The top level _type_ must be either 'object' or 'array'.
+
+Note: The top level JSON object's _type_ must be either 'object' or 'array'.
 
 ### required
 
 A boolean indicating whether an instance is mandatory (true) or optional (false).
 
-The default is false (=optional).
+The default is false (optional).
 
 ### default
 
 Defines the default value of the instance when the instance is undefined.
 
+The JSON object is edited in-place.
+In other words, the default values are set to the original JSON object, not a returned copy.
+
 ### properties
 
-Applies only to instances of type 'object'.
+Applies only to instances of type `'object'`.
 
 Defines the properties of the instance object.
 Properties are considered unordered, the order of the instance properties may be in any order.
@@ -139,13 +142,13 @@ The default is an empty object.
 
 ### patternProperties
 
-Applies only to instances of type 'object'.
+Applies only to instances of type `'object'`.
 
 Not supported yet.
 
 ### additionalProperties
 
-Applies only to instances of type 'object'.
+Applies only to instances of type `'object'`.
 
 Not supported yet.
 Current behavior is as if this attribute was set to the default, an empty schema,
@@ -153,50 +156,47 @@ which means that additional properties that are not defined by the _properties_ 
 
 ### dependencies
 
-Applies only to instances of type 'object'.
+Applies only to instances of type `'object'`.
 
 Not supported yet.
 
 ### items
 
-Applies only to instances of type 'array'.
+Applies only to instances of type `'array'`.
 
 Defines the items of the instance array.
-
-It may be a schema, in which case all the items in the array must be valid according to the schema.
-
-Alternatively _items_ may be an array of schemas.
-In this case each position in the instance array must conform to the schema in the corresponding position for this array.
-This is called tuple typing. When used, additional items are allowed, disallowed, or constrained by the _additionalItems_ attribute.
+It can take one of two forms:
+* Schema - all the items in the array must be valid according to the schema.
+* Tuple typing - an array of schemas.
+Each position in the instance array must conform to the schema in the corresponding position for this array.
+Additional items are allowed, disallowed, or constrained by the _additionalItems_ attribute.
 
 ### additionalItems
 
-Applies only to instances of type 'array', and only together with the _items_ attribute.
+Applies only to instances of type `'array'`, and only together with the _tuple typing_ form of the _items_ attribute.
 
-If the _items_ attribute is an array of schemas (tuple typing) then
-_additionalItems_ dictates the behavior when the instance array is longer than _items_.
-
-_additionalItems_ may be a schema, in which case all the additional items must be valid according to the schema.
-
-Alternatively it may be false. In this case additional items are not allowed.
+_additionalItems_ defines the behavior when there are more items in the instance array than in the _items_ array.
+It can take one of two forms:
+* Schema - all the additional items must be valid according to the schema.
+* False - additional items are not allowed.
 
 The default is an empty schema, which allows additional items of any type.
 
 ### minItems
 
-Applies only to instances of type 'array'.
+Applies only to instances of type `'array'`.
 
 Defines the minimum number of values in an array.
 
 ### maxItems
 
-Applies only to instances of type 'array'.
+Applies only to instances of type `'array'`.
 
 Defines the maximum number of values in an array.
 
 ### uniqueItems
 
-Applies only to instances of type 'array'.
+Applies only to instances of type `'array'`.
 
 This attribute indicates that all items in an array instance must be unique (contains no two identical values).
 
@@ -204,13 +204,13 @@ Not supported yet.
 
 ### minimum
 
-Applies only to instances of type 'number'.
+Applies only to instances of type `'number'`.
 
 Defines the minimum value of the instance property.
 
 ### exclusiveMinimum
 
-Applies only to instances of type 'number', and only together with the _minimum_ attribute.
+Applies only to instances of type `'number'`, and only together with the _minimum_ attribute.
 
 Defines the behavior of the _minimum_ attribute:
 * when true, _minimum_ is exclusive ("greater than")
@@ -220,13 +220,13 @@ The default is false.
 
 ### maximum
 
-Applies only to instances of type 'number'.
+Applies only to instances of type `'number'`.
 
 Defines the maximum value of the instance property.
 
 ### exclusiveMaximum
 
-Applies only to instances of type 'number', and only together with the _maximum_ attribute.
+Applies only to instances of type `'number'`, and only together with the _maximum_ attribute.
 
 Defines the behavior of the _maximum_ attribute:
 * when true, _maximum_ is exclusive ("less than")
@@ -236,26 +236,26 @@ The default is false.
 
 ### divisibleBy
 
-Applies only to instances of type 'number'.
+Applies only to instances of type `'number'`.
 
 Defines what value the number instance must be divisible by with no remainder.
 This value may not be 0.
 
 ### minLength
 
-Applies only to instances of type 'string'.
+Applies only to instances of type `'string'`.
 
 Defines the minimum length of the string.
 
 ### maxLength
 
-Applies only to instances of type 'string'.
+Applies only to instances of type `'string'`.
 
 Defines the maximum length of the string.
 
 ### pattern
 
-Applies only to instances of type 'string'.
+Applies only to instances of type `'string'`.
 
 Not supported yet.
 
