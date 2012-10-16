@@ -58,6 +58,15 @@ function validateRequired(obj, schema, names) {
 	}
 }
 
+function applyDefault(obj, schema, names) {
+	console.log('***', names, 'applyDefault');
+	if (schema.default !== undefined) {
+		obj = schema.default;
+	}
+
+	return obj;
+}
+
 function validateType(obj, schema, names) {
 	//console.log('***', names, 'validateType');
 	if (schema.type !== undefined) {
@@ -119,13 +128,13 @@ function validateArray(obj, schema, names) {
 		if (isOfType(schema.items, 'object')) {
 			// all the items in the array MUST be valid according to the schema
 			for (i = 0; i < obj.length; ++i) {
-				validateSchema(obj[i], schema.items, names.concat([i]))
+				obj[i] = validateSchema(obj[i], schema.items, names.concat([i]))
 			}
 		} else if (isOfType(schema.items, 'array')) {
 			// each position in the instance array MUST conform to the schema in the corresponding position for this array
 			var numChecks = Math.min(obj.length, schema.items.length);
 			for (i = 0; i < numChecks; ++i) {
-				validateSchema(obj[i], schema.items[i], names.concat([i]))
+				obj[i] = validateSchema(obj[i], schema.items[i], names.concat([i]))
 			}
 			if (obj.length > schema.items.length) {
 				if (schema.additionalItems !== undefined) {
@@ -136,7 +145,7 @@ function validateArray(obj, schema, names) {
 						throw new SyntaxError(getName(names) + ' schema additionalItems must be an object or false');
 					}
 					for (; i < obj.length; ++i) {
-						validateSchema(obj[i], schema.additionalItems, names.concat([i]))
+						obj[i] = validateSchema(obj[i], schema.additionalItems, names.concat([i]))
 					}
 				}
 			}
@@ -146,24 +155,35 @@ function validateArray(obj, schema, names) {
 	}
 
 	// TODO: uniqueItems
+
+	return obj;
 }
 
 function validateProperties(obj, schema, names) {
-	//console.log('***', names, 'validateProperties');
+	console.log('***', names, 'validateProperties');
 	if (schema.properties !== undefined) {
 		if (!isOfType(schema.properties, 'object')) {
 			throw new SyntaxError(getName(names) + ' schema properties must be an object');
 		}
 		for (var property in schema.properties) {
-			validateSchema(obj[property], schema.properties[property], names.concat([property]))
+			prop = validateSchema(obj[property], schema.properties[property], names.concat([property]))
+			if (prop === undefined) {
+				delete obj[property];
+			} else {
+				obj[property] = prop;
+			}
 		}
 	}
+
+	return obj;
 }
 
 function validateObject(obj, schema, names) {
-	//console.log('***', names, 'validateObject');
-	validateProperties(obj, schema, names);
+	console.log('***', names, 'validateObject');
+	obj = validateProperties(obj, schema, names);
 	// TODO: patternProperties, additionalProperties, dependencies
+
+	return obj;
 }
 
 function validateNumber(obj, schema, names) {
@@ -248,21 +268,24 @@ function validateItem(obj, schema, names) {
 		validateString(obj, schema, names);
 	}
 
-	// TODO: enum, default, format
+	// TODO: enum, format
 }
 
 function validateSchema(obj, schema, names) {
-	//console.log('***', names, 'validateSchema');
+	console.log('***', names, 'validateSchema');
 
 	validateRequired(obj, schema, names);
+	if (obj === undefined) {
+		obj = applyDefault(obj, schema, names);
+	}
 	if (obj !== undefined) {
 		validateType(obj, schema, names);
 		// TODO: disallow
 
 		if (isOfType(obj, 'object')) {
-			validateObject(obj, schema, names);
+			obj = validateObject(obj, schema, names);
 		} else if (isOfType(obj, 'array')) {
-			validateArray(obj, schema, names);
+			obj = validateArray(obj, schema, names);
 		} else {
 			validateItem(obj, schema, names);
 		}
@@ -303,11 +326,9 @@ module.exports = function(obj, schema, done) {
 			throw new SyntaxError('Schema \'type\' is \'' + schema.type + '\' when it should be \'object\' or \'array\'');
 		}
 
-		newObj = validateSchema(obj, schema, []);
+		validateSchema(obj, schema, []);
 		if (done) {
-			done(null, newObj);
-		} else {
-			return newObj;
+			done(null, obj);
 		}
 	} catch(err) {
 		if (done) {

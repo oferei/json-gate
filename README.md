@@ -2,8 +2,8 @@
 
 _jsonly_ validates JSON objects against a JSON schema.
 In other words, it makes sure an object conforms to the type and structure that your code expects.
+For example, a server can use it to ensure input received from a client conforms to the API.
 
-For example, a server can use it to ensure input from a client conforms to the API.
 The JSON schema can also help with documentation and collaboration. Copy it to your API document and everybody should understand exactly what is expected.
 
 _jsonly_ is extremely easy to use:
@@ -40,7 +40,7 @@ _jsonly_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft
     };
 
     try {
-    	input = jsonly(input, schema);
+    	jsonly(input, schema);
     } catch(err) {
     	return res.send(400, err.message); // 400 Bad Request
     }
@@ -52,7 +52,8 @@ _jsonly_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft
 ## Usage
 
 _jsonly_ receives an object and a schema.
-Its output is either the (possibly modified) object, or the first encountered error.
+It returns the first encountered error, if any.
+Input object may be edited _in-place_ if _default_ attributes are used.
 
 ### Errors
 
@@ -67,11 +68,13 @@ _jsonly_ throws the following errors:
 
 ### Synchronous/Asynchronous
 
+Your choice.
+
 _jsonly_ may be called synchronously, as in the example above, with two parameters.
-It then returns the object or throws an error.
+It returns nothing if ok. Otherwise it throws an error.
 
 _jsonly_ may also be called asynchronously by providing a 3rd parameter - a callback function.
-The callback function gets two arguments: error and result.
+The callback function gets two arguments: error and result (the original object, which may be modified).
 
 ## Hello schema
 
@@ -82,6 +85,10 @@ Let's start by analyzing the schema given in the example above.
 * It should have a property named _query_, which should be a string of up to 32 characters
 * It may optionaly have a property named _maxResults_, which should be an integer with a maximum value of 20
 * If _maxResults_ is missing, it will be generated with the value 10
+
+See Attributes section below to learn about more possibilities.
+
+JSON Schema has recursive capabilities. Objects and arrays include other attributes, which may be objects and arrays.
 
 ## Attributes
 
