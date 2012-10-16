@@ -25,7 +25,7 @@
     "assert",
     "validate"
   ],
-  "main": "jsonly.js",
+  "main": "lib/jsonly.js",
   "scripts": {
     "test": "node_modules\\.bin\\vows --spec"
   },

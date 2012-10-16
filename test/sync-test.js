@@ -36,10 +36,9 @@ vows.describe('Sync-Async').addBatch({
 			}
 			var result = jsonly(emptyObject, schemaEmptyObject);
 		},
-		'we get back the object': function (err, result) {
+		'we get back nothing': function (err, result) {
 			should.not.exist(err);
-			should.exist(result);
-			result.should.eql(emptyObject);
+			should.not.exist(result);
 		}
 	}
 }).addBatch({
