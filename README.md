@@ -12,7 +12,7 @@ _jsonly_ is extremely easy to use:
 * Conforms to standard - no surprises
 * Well documented, in case you don't feel like digging into the IETF specifications
 
-# What's a JSON schema?
+## What's a JSON schema?
 
 [JSON Schema](http://json-schema.org/) is a proposed Internet draft defining a JSON media type (application/schema+json) with the following goals:
 * Validation - You can use JSON Schema to validate your JSON data.
