@@ -1,7 +1,7 @@
 {
   "name": "json-gate",
-  "description": "An easy to use JSON schema validator",
-  "version": "0.8.0",
+  "description": "An easy-to-use JSON schema validator",
+  "version": "0.8.2",
   "author": {
     "name": "Ofer Reichman",
     "email": "oferei@gmail.com"
@@ -15,6 +15,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/oferei/json-gate.git"
+  },
+  "bugs": {
+    "url" : "https://github.com/oferei/json-gate/issues"
   },
   "dependencies": {
   },
