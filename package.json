@@ -12,6 +12,10 @@
       "email": "oferei@gmail.com"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oferei/json-gate.git"
+  },
   "dependencies": {
   },
   "keywords": [
