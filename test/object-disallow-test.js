@@ -38,128 +38,90 @@ var objAny = {
 	val: 'sub kuch milega'
 };
 
-var schemaString = {
+var schemaNonString = {
 	type: 'object',
 	properties: {
 		val: {
-			type: 'string',
+			disallow: 'string',
 			required: true
 		}
 	}
 };
 
-var schemaNumber = {
+var schemaNonNumber = {
 	type: 'object',
 	properties: {
 		val: {
-			type: 'number',
+			disallow: 'number',
 			required: true
 		}
 	}
 };
 
-var schemaInteger = {
+var schemaNonInteger = {
 	type: 'object',
 	properties: {
 		val: {
-			type: 'integer',
+			disallow: 'integer',
 			required: true
 		}
 	}
 };
 
-var schemaBoolean = {
+var schemaNonBoolean = {
 	type: 'object',
 	properties: {
 		val: {
-			type: 'boolean',
+			disallow: 'boolean',
 			required: true
 		}
 	}
 };
 
-var schemaObject = {
+var schemaNonObject = {
 	type: 'object',
 	properties: {
 		val: {
-			type: 'object',
+			disallow: 'object',
 			required: true
 		}
 	}
 };
 
-var schemaArray = {
+var schemaNonArray = {
 	type: 'object',
 	properties: {
 		val: {
-			type: 'array',
+			disallow: 'array',
 			required: true
 		}
 	}
 };
 
-var schemaNull = {
+var schemaNonNull = {
 	type: 'object',
 	properties: {
 		val: {
-			type: 'null',
+			disallow: 'null',
 			required: true
 		}
 	}
 };
 
-var schemaAny = {
+var schemaNonAny = {
 	type: 'object',
 	properties: {
 		val: {
-			type: 'any',
+			disallow: 'any',
 			required: true
 		}
 	}
 };
 
 vows.describe('Object Type').addBatch({
-	'when a string is passed for a string': {
+	'when a string is passed for a non-string': {
 		topic: function () {
-			var schema = createSchema(schemaString);
-			schema.validate(objString, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
-		}
-	}
-}).addBatch({
-	'when trying to pass a number for a string': {
-		topic: function () {
-			var schema = createSchema(schemaString);
-			schema.validate(objNumber, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when a number is passed for a number': {
-		topic: function () {
-			var schema = createSchema(schemaNumber);
-			schema.validate(objNumber, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
-		}
-	}
-}).addBatch({
-	'when trying to pass a string for a number': {
-		topic: function () {
-			var schema = createSchema(schemaNumber);
+			var schema = createSchema(schemaNonString);
 			schema.validate(objString, this.callback);
 		},
 		'we get an error': function (err, result) {
@@ -171,10 +133,10 @@ vows.describe('Object Type').addBatch({
 		}
 	}
 }).addBatch({
-	'when an integer is passed for a number': {
+	'when trying to pass a number for a non-string': {
 		topic: function () {
-			var schema = createSchema(schemaNumber);
-			schema.validate(objInteger, this.callback);
+			var schema = createSchema(schemaNonString);
+			schema.validate(objNumber, this.callback);
 		},
 		'we get no error': function (err, result) {
 			should.not.exist(err);
@@ -183,21 +145,9 @@ vows.describe('Object Type').addBatch({
 		}
 	}
 }).addBatch({
-	'when an integer is passed for an integer': {
+	'when a number is passed for a non-number': {
 		topic: function () {
-			var schema = createSchema(schemaInteger);
-			schema.validate(objInteger, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
-		}
-	}
-}).addBatch({
-	'when trying to pass a number for an integer': {
-		topic: function () {
-			var schema = createSchema(schemaInteger);
+			var schema = createSchema(schemaNonNumber);
 			schema.validate(objNumber, this.callback);
 		},
 		'we get an error': function (err, result) {
@@ -209,37 +159,77 @@ vows.describe('Object Type').addBatch({
 		}
 	}
 }).addBatch({
-	'when a boolean is passed for a boolean': {
+	'when trying to pass a string for a non-number': {
 		topic: function () {
-			var schema = createSchema(schemaBoolean);
+			var schema = createSchema(schemaNonNumber);
+			schema.validate(objString, this.callback);
+		},
+		'we get no error': function (err, result) {
+			should.not.exist(err);
+			should.exist(result);
+			result.should.not.be.instanceof(Error);
+		}
+	}
+}).addBatch({
+	'when an integer is passed for a non-number': {
+		topic: function () {
+			var schema = createSchema(schemaNonNumber);
+			schema.validate(objInteger, this.callback);
+		},
+		'we get an error': function (err, result) {
+			should.exist(err);
+			should.not.exist(result);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
+		}
+	}
+}).addBatch({
+	'when an integer is passed for a non-integer': {
+		topic: function () {
+			var schema = createSchema(schemaNonInteger);
+			schema.validate(objInteger, this.callback);
+		},
+		'we get an error': function (err, result) {
+			should.exist(err);
+			should.not.exist(result);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
+		}
+	}
+}).addBatch({
+	'when trying to pass a number for a non-integer': {
+		topic: function () {
+			var schema = createSchema(schemaNonInteger);
+			schema.validate(objNumber, this.callback);
+		},
+		'we get no error': function (err, result) {
+			should.not.exist(err);
+			should.exist(result);
+			result.should.not.be.instanceof(Error);
+		}
+	}
+}).addBatch({
+	'when a boolean is passed for a non-boolean': {
+		topic: function () {
+			var schema = createSchema(schemaNonBoolean);
 			schema.validate(objBoolean, this.callback);
 		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
+		'we get an error': function (err, result) {
+			should.exist(err);
+			should.not.exist(result);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
 		}
 	}
 }).addBatch({
-	'when trying to pass an integer for a boolean': {
+	'when trying to pass an integer for a non-boolean': {
 		topic: function () {
-			var schema = createSchema(schemaBoolean);
+			var schema = createSchema(schemaNonBoolean);
 			schema.validate(objInteger, this.callback);
 		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when an object is passed for an object': {
-		topic: function () {
-			var schema = createSchema(schemaObject);
-			schema.validate(objObject, this.callback);
-		},
 		'we get no error': function (err, result) {
 			should.not.exist(err);
 			should.exist(result);
@@ -247,35 +237,9 @@ vows.describe('Object Type').addBatch({
 		}
 	}
 }).addBatch({
-	'when trying to pass an array for an object': {
+	'when an object is passed for a non-object': {
 		topic: function () {
-			var schema = createSchema(schemaObject);
-			schema.validate(objArray, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when an array is passed for an array': {
-		topic: function () {
-			var schema = createSchema(schemaArray);
-			schema.validate(objArray, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
-		}
-	}
-}).addBatch({
-	'when trying to pass an object for an array': {
-		topic: function () {
-			var schema = createSchema(schemaArray);
+			var schema = createSchema(schemaNonObject);
 			schema.validate(objObject, this.callback);
 		},
 		'we get an error': function (err, result) {
@@ -287,23 +251,49 @@ vows.describe('Object Type').addBatch({
 		}
 	}
 }).addBatch({
-	'when a null is passed for a null': {
+	'when trying to pass an array for a non-object': {
 		topic: function () {
-			var schema = createSchema(schemaNull);
+			var schema = createSchema(schemaNonObject);
+			schema.validate(objArray, this.callback);
+		},
+		'we get no error': function (err, result) {
+			should.not.exist(err);
+			should.exist(result);
+			result.should.not.be.instanceof(Error);
+		}
+	}
+}).addBatch({
+	'when an array is passed for a non-array': {
+		topic: function () {
+			var schema = createSchema(schemaNonArray);
+			schema.validate(objArray, this.callback);
+		},
+		'we get an error': function (err, result) {
+			should.exist(err);
+			should.not.exist(result);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
+		}
+	}
+}).addBatch({
+	'when trying to pass an object for a non-array': {
+		topic: function () {
+			var schema = createSchema(schemaNonArray);
+			schema.validate(objObject, this.callback);
+		},
+		'we get no error': function (err, result) {
+			should.not.exist(err);
+			should.exist(result);
+			result.should.not.be.instanceof(Error);
+		}
+	}
+}).addBatch({
+	'when a null is passed for a non-null': {
+		topic: function () {
+			var schema = createSchema(schemaNonNull);
 			schema.validate(objNull, this.callback);
 		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
-		}
-	}
-}).addBatch({
-	'when trying to pass a boolean for a null': {
-		topic: function () {
-			var schema = createSchema(schemaNull);
-			schema.validate(objBoolean, this.callback);
-		},
 		'we get an error': function (err, result) {
 			should.exist(err);
 			should.not.exist(result);
@@ -313,15 +303,29 @@ vows.describe('Object Type').addBatch({
 		}
 	}
 }).addBatch({
-	'when a string is passed for any': {
+	'when trying to pass a boolean for a non-null': {
 		topic: function () {
-			var schema = createSchema(schemaAny);
-			schema.validate(objAny, this.callback);
+			var schema = createSchema(schemaNonNull);
+			schema.validate(objBoolean, this.callback);
 		},
 		'we get no error': function (err, result) {
 			should.not.exist(err);
 			should.exist(result);
 			result.should.not.be.instanceof(Error);
+		}
+	}
+}).addBatch({
+	'when a string is passed for non-any': {
+		topic: function () {
+			var schema = createSchema(schemaNonAny);
+			schema.validate(objAny, this.callback);
+		},
+		'we get an error': function (err, result) {
+			should.exist(err);
+			should.not.exist(result);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
 		}
 	}
 }).export(module);

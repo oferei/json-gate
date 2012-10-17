@@ -22,7 +22,7 @@ var schemaUnionType = {
 	type: 'object',
 	properties: {
 		nullable: {
-			type: ['string', 'null']
+			disallow: ['string', 'null']
 		}
 	}
 };
@@ -66,103 +66,71 @@ var schemaUnionTypeWithSchema = {
 	type: 'object',
 	properties: {
 		nullable: {
-			type: ['string', 'null', schemaHuman],
+			disallow: ['string', 'null', schemaHuman],
 			required: true
 		}
 	}
 };
 
 vows.describe('Object Type').addBatch({
-	'when a string is passed for either a string or a null': {
+	'when a string is passed for neither a string nor a null': {
 		topic: function () {
 			var schema = createSchema(schemaUnionType);
 			schema.validate(objString, this.callback);
 		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
+		'we get an error': function (err, result) {
+			should.exist(err);
+			should.not.exist(result);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
 		}
 	}
 }).addBatch({
-	'when a null is passed for either a string or a null': {
+	'when a null is passed for neither a string nor a null': {
 		topic: function () {
 			var schema = createSchema(schemaUnionType);
 			schema.validate(objNull, this.callback);
 		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
+		'we get an error': function (err, result) {
+			should.exist(err);
+			should.not.exist(result);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
 		}
 	}
 }).addBatch({
-	'when trying to pass an integer for either a string or a null': {
+	'when trying to pass an integer for neither a string nor a null': {
 		topic: function () {
 			var schema = createSchema(schemaUnionType);
 			schema.validate(objInteger, this.callback);
 		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
+		'we get no error': function (err, result) {
+			should.not.exist(err);
+			should.exist(result);
+			result.should.not.be.instanceof(Error);
 		}
 	}
 }).addBatch({
-	'when a string is passed for either a string or a null or a human': {
+	'when a string is passed for neither a string nor a null nor a human': {
 		topic: function () {
 			var schema = createSchema(schemaUnionTypeWithSchema);
 			schema.validate(objString, this.callback);
 		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
+		'we get an error': function (err, result) {
+			should.exist(err);
+			should.not.exist(result);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
 		}
 	}
 }).addBatch({
-	'when a null is passed for either a string or a null or a human': {
+	'when a null is passed for neither a string nor a null nor a human': {
 		topic: function () {
 			var schema = createSchema(schemaUnionTypeWithSchema);
 			schema.validate(objNull, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
-		}
-	}
-}).addBatch({
-	'when a man is passed for either a string or a null or a human': {
-		topic: function () {
-			var schema = createSchema(schemaUnionTypeWithSchema);
-			schema.validate(objMan, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
-		}
-	}
-}).addBatch({
-	'when a woman is passed for either a string or a null or a human': {
-		topic: function () {
-			var schema = createSchema(schemaUnionTypeWithSchema);
-			schema.validate(objWoman, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-			result.should.not.be.instanceof(Error);
-		}
-	}
-}).addBatch({
-	'when trying to pass an alien for either a string or a null or a human': {
-		topic: function () {
-			var schema = createSchema(schemaUnionTypeWithSchema);
-			schema.validate(objAlien, this.callback);
 		},
 		'we get an error': function (err, result) {
 			should.exist(err);
@@ -170,6 +138,46 @@ vows.describe('Object Type').addBatch({
 			if (config.verbose) {
 				console.log('Error:', err)
 			}
+		}
+	}
+}).addBatch({
+	'when a man is passed for neither a string nor a null nor a human': {
+		topic: function () {
+			var schema = createSchema(schemaUnionTypeWithSchema);
+			schema.validate(objMan, this.callback);
+		},
+		'we get an error': function (err, result) {
+			should.exist(err);
+			should.not.exist(result);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
+		}
+	}
+}).addBatch({
+	'when a woman is passed for neither a string nor a null nor a human': {
+		topic: function () {
+			var schema = createSchema(schemaUnionTypeWithSchema);
+			schema.validate(objWoman, this.callback);
+		},
+		'we get an error': function (err, result) {
+			should.exist(err);
+			should.not.exist(result);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
+		}
+	}
+}).addBatch({
+	'when trying to pass an alien for neither a string nor a null nor a human': {
+		topic: function () {
+			var schema = createSchema(schemaUnionTypeWithSchema);
+			schema.validate(objAlien, this.callback);
+		},
+		'we get no error': function (err, result) {
+			should.not.exist(err);
+			should.exist(result);
+			result.should.not.be.instanceof(Error);
 		}
 	}
 }).export(module);

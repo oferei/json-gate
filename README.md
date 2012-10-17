@@ -120,7 +120,11 @@ Note: The top level JSON object's _type_ must be either 'object' or 'array'.
 
 ### disallow
 
-Not supported yet.
+Defines the disallowed instance type. This is the opposite of _type_.
+It can take one of two forms:
+* Simple type - any of the following: 'string', 'number', 'integer', 'boolean', 'object', 'array', 'null' or 'any'.
+* Union type - an array of simple types and/or schemas. The instance type should not be any of the types in the array.
+For example, if _type_ is ['string', 'null'] then the instance may be neither a string nor null.
 
 ### required
 
