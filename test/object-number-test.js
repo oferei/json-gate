@@ -3,8 +3,7 @@
 var vows = require('vows'),
 	should = require('should');
 
-var jsonly = require('..'),
-	createSchema = jsonly.createSchema,
+var createSchema = require('..').createSchema,
 	config = require('./config');
 
 var obj = {
@@ -16,7 +15,8 @@ var schemaCorrectMinimum = {
 	properties: {
 		num: {
 			type: 'number',
-			minimum: 108
+			minimum: 108,
+			required: true
 		}
 	}
 };
@@ -26,7 +26,8 @@ var schemaIncorrectMinimum = {
 	properties: {
 		num: {
 			type: 'number',
-			minimum: 109
+			minimum: 109,
+			required: true
 		}
 	}
 };
@@ -37,7 +38,8 @@ var schemaCorrectExclusiveMinimum = {
 		num: {
 			type: 'number',
 			minimum: 107.999,
-			exclusiveMinimum: true
+			exclusiveMinimum: true,
+			required: true
 		}
 	}
 };
@@ -48,7 +50,8 @@ var schemaIncorrectExclusiveMinimum = {
 		num: {
 			type: 'number',
 			minimum: 108,
-			exclusiveMinimum: true
+			exclusiveMinimum: true,
+			required: true
 		}
 	}
 };
@@ -58,7 +61,8 @@ var schemaCorrectMaximum = {
 	properties: {
 		num: {
 			type: 'number',
-			maximum: 108
+			maximum: 108,
+			required: true
 		}
 	}
 };
@@ -68,7 +72,8 @@ var schemaIncorrectMaximum = {
 	properties: {
 		num: {
 			type: 'number',
-			maximum: 107
+			maximum: 107,
+			required: true
 		}
 	}
 };
@@ -79,7 +84,8 @@ var schemaCorrectExclusiveMaximum = {
 		num: {
 			type: 'number',
 			maximum: 108.001,
-			exclusiveMaximum: true
+			exclusiveMaximum: true,
+			required: true
 		}
 	}
 };
@@ -90,7 +96,8 @@ var schemaIncorrectExclusiveMaximum = {
 		num: {
 			type: 'number',
 			maximum: 108,
-			exclusiveMaximum: true
+			exclusiveMaximum: true,
+			required: true
 		}
 	}
 };
@@ -100,7 +107,8 @@ var schemaCorrectDivisibleBy = {
 	properties: {
 		num: {
 			type: 'number',
-			divisibleBy: 36
+			divisibleBy: 36,
+			required: true
 		}
 	}
 };
@@ -110,7 +118,8 @@ var schemaIncorrectDivisibleBy = {
 	properties: {
 		num: {
 			type: 'number',
-			divisibleBy: 17
+			divisibleBy: 17,
+			required: true
 		}
 	}
 };

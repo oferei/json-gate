@@ -1,5 +1,5 @@
 {
-  "name": "jsonly",
+  "name": "json-gate",
   "description": "JSON schema validator",
   "version": "0.0.1",
   "private": true,
@@ -22,10 +22,11 @@
   "keywords": [
     "json",
     "schema",
-    "assert",
-    "validate"
+    "validator",
+    "validate",
+    "assert"
   ],
-  "main": "lib/jsonly.js",
+  "main": "lib/json-gate.js",
   "scripts": {
     "test": "node_modules\\.bin\\vows --spec"
   },

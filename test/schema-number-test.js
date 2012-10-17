@@ -3,8 +3,7 @@
 var vows = require('vows'),
 	should = require('should');
 
-var jsonly = require('..'),
-	createSchema = jsonly.createSchema,
+var createSchema = require('..').createSchema,
 	config = require('./config');
 
 var schemaValidMinimum = {

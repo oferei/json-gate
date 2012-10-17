@@ -3,12 +3,11 @@
 var vows = require('vows'),
 	should = require('should');
 
-var jsonly = require('..'),
-	createSchema = jsonly.createSchema,
+var createSchema = require('..').createSchema,
 	config = require('./config');
 
 var obj = {
-	str: 'Hello, JSON only'
+	str: 'Hello, json-gate'
 };
 
 var schemaCorrectMinLength = {
@@ -16,7 +15,8 @@ var schemaCorrectMinLength = {
 	properties: {
 		str: {
 			type: 'string',
-			minLength: 16
+			minLength: 16,
+			required: true
 		}
 	}
 };
@@ -26,7 +26,8 @@ var schemaIncorrectMinLength = {
 	properties: {
 		str: {
 			type: 'string',
-			minLength: 17
+			minLength: 17,
+			required: true
 		}
 	}
 };
@@ -36,7 +37,8 @@ var schemaCorrectMaxLength = {
 	properties: {
 		str: {
 			type: 'string',
-			maxLength: 16
+			maxLength: 16,
+			required: true
 		}
 	}
 };
@@ -46,7 +48,8 @@ var schemaIncorrectMaxLength = {
 	properties: {
 		str: {
 			type: 'string',
-			maxLength: 15
+			maxLength: 15,
+			required: true
 		}
 	}
 };
@@ -56,7 +59,8 @@ var schemaCorrectPattern = {
 	properties: {
 		str: {
 			type: 'string',
-			pattern: '^Hello'
+			pattern: '^Hello',
+			required: true
 		}
 	}
 };
@@ -66,7 +70,8 @@ var schemaIncorrectPattern = {
 	properties: {
 		str: {
 			type: 'string',
-			pattern: 'Hello$'
+			pattern: 'Hello$',
+			required: true
 		}
 	}
 };

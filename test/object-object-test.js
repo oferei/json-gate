@@ -3,8 +3,7 @@
 var vows = require('vows'),
 	should = require('should');
 
-var jsonly = require('..'),
-	createSchema = jsonly.createSchema,
+var createSchema = require('..').createSchema,
 	config = require('./config');
 
 var obj = {
@@ -24,25 +23,32 @@ var schemaValid = {
 	type: 'object',
 	properties: {
 		str: {
-			type: 'string'
+			type: 'string',
+			required: true
 		},
 		obj1: {
 			type: 'object',
+			required: true,
 			properties: {
 				num: {
-					type: 'number'
+					type: 'number',
+					required: true
 				},
 				obj2: {
 					type: 'object',
+					required: true,
 					properties: {
 						bool: {
-							type: 'boolean'
+							type: 'boolean',
+							required: true
 						},
 						obj3: {
 							type: 'object',
+							required: true,
 							properties: {
 								str: {
-									type: 'string'
+									type: 'string',
+									required: true
 								}
 							}
 						}

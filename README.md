@@ -1,12 +1,12 @@
-# jsonly
+# json-gate
 
-_jsonly_ validates JSON objects against a JSON schema.
+_json-gate_ validates JSON objects against a JSON schema.
 In other words, it makes sure an object conforms to the type and structure that your code expects.
 For example, a server can use it to ensure input received from a client conforms to the API.
 
 The JSON schema can also help with documentation and collaboration. Copy it to your API document and everybody should understand exactly what is expected.
 
-_jsonly_ is extremely easy to use:
+_json-gate_ is extremely easy to use:
 * Intuitive - one function to create a schema, one function to use it
 * Both synchronous and asynchronous modes - your choice
 * Conforms to standard - no surprises
@@ -19,11 +19,11 @@ _jsonly_ is extremely easy to use:
 * Documentation - You can extract documentation information from a JSON Schema, match this documentation to your data, and use that information for user interaction.
 * Hyperlinking - You can pair your JSON data with the defining JSON Schema to build hyperlinks into parts of that JSON data.
 
-_jsonly_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft-zyp-json-schema-03), without the hyperlinking part.
+_json-gate_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft-zyp-json-schema-03), without the hyperlinking part.
 
 ## Example
 
-    var createSchema = require('jsonly').createSchema;
+    var createSchema = require('json-gate').createSchema;
 
     var schema = createSchema({
     	type: 'object',
@@ -50,11 +50,11 @@ _jsonly_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft
 
 ## Installation
 
-    $ npm install jsonly
+    $ npm install json-gate
 
 ## Usage
 
-### _jsonly.createSchema_(jsonSchema)
+### _json-gate.createSchema_(jsonSchema)
 
 This function gets a JSON Schema definition and returns a new _Schema_ object.
 It may throw an error if the JSON Schema definition is malformed.
@@ -118,6 +118,10 @@ The default is 'any'.
 
 Note: The top level JSON object's _type_ must be either 'object' or 'array'.
 
+### disallow
+
+Not supported yet.
+
 ### required
 
 A boolean indicating whether an instance is mandatory (true) or optional (false).
@@ -130,6 +134,11 @@ Defines the default value of the instance when the instance is undefined.
 
 The JSON object is edited in-place.
 In other words, the default values are set to the original JSON object, not a returned copy.
+
+### enum
+
+An array containing all possible values.
+The instance must equal one of the values.
 
 ### properties
 
@@ -261,14 +270,5 @@ Defines what value the number instance must be divisible by with no remainder.
 This value may not be 0.
 
 ### format
-
-Not supported yet.
-
-### enum
-
-An array containing all possible values.
-The instance must equal one of the values.
-
-### disallow
 
 Not supported yet.
