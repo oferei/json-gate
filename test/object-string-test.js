@@ -1,10 +1,10 @@
 // this test is run by Vows (as all files matching *test.js)
 
-var vows = require('vows'),
-	should = require('should');
+var vows = require('vows');
 
-var createSchema = require('..').createSchema,
-	config = require('./config');
+var common = require('./common'),
+	objectShouldBeValid = common.objectShouldBeValid,
+	objectShouldBeInvalid = common.objectShouldBeInvalid;
 
 var obj = {
 	str: 'Hello, json-gate'
@@ -77,78 +77,10 @@ var schemaIncorrectPattern = {
 };
 
 vows.describe('Object String').addBatch({
-	'when complies with minimum length': {
-		topic: function () {
-			var schema = createSchema(schemaCorrectMinLength);
-			schema.validate(obj, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-		}
-	}
-}).addBatch({
-	'when exceeds minimum length': {
-		topic: function () {
-			var schema = createSchema(schemaIncorrectMinLength);
-			schema.validate(obj, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when complies with maximum length': {
-		topic: function () {
-			var schema = createSchema(schemaCorrectMaxLength);
-			schema.validate(obj, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-		}
-	}
-}).addBatch({
-	'when exceeds maximum length': {
-		topic: function () {
-			var schema = createSchema(schemaIncorrectMaxLength);
-			schema.validate(obj, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when complies with pattern': {
-		topic: function () {
-			var schema = createSchema(schemaCorrectPattern);
-			schema.validate(obj, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-		}
-	}
-}).addBatch({
-	'when does not comply with pattern': {
-		topic: function () {
-			var schema = createSchema(schemaIncorrectPattern);
-			schema.validate(obj, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
+	'when complies with minimum length': objectShouldBeValid(obj, schemaCorrectMinLength),
+	'when exceeds minimum length': objectShouldBeInvalid(obj, schemaIncorrectMinLength),
+	'when complies with maximum length': objectShouldBeValid(obj, schemaCorrectMaxLength),
+	'when exceeds maximum length': objectShouldBeInvalid(obj, schemaIncorrectMaxLength),
+	'when complies with pattern': objectShouldBeValid(obj, schemaCorrectPattern),
+	'when does not comply with pattern': objectShouldBeInvalid(obj, schemaIncorrectPattern)
 }).export(module);

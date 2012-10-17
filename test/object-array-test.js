@@ -1,10 +1,10 @@
 // this test is run by Vows (as all files matching *test.js)
 
-var vows = require('vows'),
-	should = require('should');
+var vows = require('vows');
 
-var createSchema = require('..').createSchema,
-	config = require('./config');
+var common = require('./common'),
+	objectShouldBeValid = common.objectShouldBeValid,
+	objectShouldBeInvalid = common.objectShouldBeInvalid;
 
 var arrAllStrings = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -95,113 +95,13 @@ var schemaNoAdditionalItems = {
 };
 
 vows.describe('Object Array').addBatch({
-	'when passing strings for strings': {
-		topic: function () {
-			var schema = createSchema(schemaAllStrings);
-			schema.validate(arrAllStrings, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-		}
-	}
-}).addBatch({
-	'when passing non-strings for strings': {
-		topic: function () {
-			var schema = createSchema(schemaAllStrings);
-			schema.validate(arrTuple, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when passing a suitable tuple': {
-		topic: function () {
-			var schema = createSchema(schemaTupleWithProperties);
-			schema.validate(arrTuple, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-		}
-	}
-}).addBatch({
-	'when an element has wrong type': {
-		topic: function () {
-			var schema = createSchema(schemaTupleWithProperties);
-			schema.validate(arrTupleInvalidType, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when an element is an object with a property with wrong type': {
-		topic: function () {
-			var schema = createSchema(schemaTupleWithProperties);
-			schema.validate(arrTupleInvalidNestedType, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when additional items are correct type': {
-		topic: function () {
-			var schema = createSchema(schemaAdditionalItems);
-			schema.validate(arrTuplePlus, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-		}
-	}
-}).addBatch({
-	'when additional items are wrong type': {
-		topic: function () {
-			var schema = createSchema(schemaAdditionalItems);
-			schema.validate(arrTuplePlusInvalidType, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when no additional types is respected': {
-		topic: function () {
-			var schema = createSchema(schemaNoAdditionalItems);
-			schema.validate(arrTuple2, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-		}
-	}
-}).addBatch({
-	'when no additional types is not respected': {
-		topic: function () {
-			var schema = createSchema(schemaNoAdditionalItems);
-			schema.validate(arrTuple, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
+	'when passing strings for strings': objectShouldBeValid(arrAllStrings, schemaAllStrings),
+	'when passing non-strings for strings': objectShouldBeInvalid(arrTuple, schemaAllStrings),
+	'when passing a suitable tuple': objectShouldBeValid(arrTuple, schemaTupleWithProperties),
+	'when an element has wrong type': objectShouldBeInvalid(arrTupleInvalidType, schemaTupleWithProperties),
+	'when an element is an object with a property with wrong type': objectShouldBeInvalid(arrTupleInvalidNestedType, schemaTupleWithProperties),
+	'when additional items are correct type': objectShouldBeValid(arrTuplePlus, schemaAdditionalItems),
+	'when additional items are wrong type': objectShouldBeInvalid(arrTuplePlusInvalidType, schemaAdditionalItems),
+	'when no additional types is respected': objectShouldBeValid(arrTuple2, schemaNoAdditionalItems),
+	'when no additional types is not respected': objectShouldBeInvalid(arrTuple, schemaNoAdditionalItems)
 }).export(module);

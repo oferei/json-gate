@@ -1,10 +1,10 @@
 // this test is run by Vows (as all files matching *test.js)
 
-var vows = require('vows'),
-	should = require('should');
+var vows = require('vows');
 
-var createSchema = require('..').createSchema,
-	config = require('./config');
+var common = require('./common'),
+	objectShouldBeValid = common.objectShouldBeValid,
+	objectShouldBeInvalid = common.objectShouldBeInvalid;
 
 var obj = {
 	str: 'top',
@@ -60,13 +60,5 @@ var schemaValid = {
 };
 
 vows.describe('Object Object').addBatch({
-	'when validating nested object': {
-		topic: function () {
-			var schema = createSchema(schemaValid);
-			schema.validate(obj, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-		}
-	}
+	'when validating nested object': objectShouldBeValid(obj, schemaValid)
 }).export(module);

@@ -1,10 +1,10 @@
 // this test is run by Vows (as all files matching *test.js)
 
-var vows = require('vows'),
-	should = require('should');
+var vows = require('vows');
 
-var createSchema = require('..').createSchema,
-	config = require('./config');
+var common = require('./common'),
+	objectShouldBeValid = common.objectShouldBeValid,
+	objectShouldBeInvalid = common.objectShouldBeInvalid;
 
 var obj = {
 	num: 108
@@ -125,128 +125,14 @@ var schemaIncorrectDivisibleBy = {
 };
 
 vows.describe('Object Number').addBatch({
-	'when complies with minimum': {
-		topic: function () {
-			var schema = createSchema(schemaCorrectMinimum);
-			schema.validate(obj, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-		}
-	}
-}).addBatch({
-	'when exceeds minimum': {
-		topic: function () {
-			var schema = createSchema(schemaIncorrectMinimum);
-			schema.validate(obj, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when complies with exclusive minimum': {
-		topic: function () {
-			var schema = createSchema(schemaCorrectExclusiveMinimum);
-			schema.validate(obj, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-		}
-	}
-}).addBatch({
-	'when exceeds exclusive minimum': {
-		topic: function () {
-			var schema = createSchema(schemaIncorrectExclusiveMinimum);
-			schema.validate(obj, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when complies with maximum': {
-		topic: function () {
-			var schema = createSchema(schemaCorrectMaximum);
-			schema.validate(obj, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-		}
-	}
-}).addBatch({
-	'when exceeds maximum': {
-		topic: function () {
-			var schema = createSchema(schemaIncorrectMaximum);
-			schema.validate(obj, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when complies with exclusive maximum': {
-		topic: function () {
-			var schema = createSchema(schemaCorrectExclusiveMaximum);
-			schema.validate(obj, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-		}
-	}
-}).addBatch({
-	'when exceeds exclusive maximum': {
-		topic: function () {
-			var schema = createSchema(schemaIncorrectExclusiveMaximum);
-			schema.validate(obj, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when divisible by given divisor': {
-		topic: function () {
-			var schema = createSchema(schemaCorrectDivisibleBy);
-			schema.validate(obj, this.callback);
-		},
-		'we get no error': function (err, result) {
-			should.not.exist(err);
-			should.exist(result);
-		}
-	}
-}).addBatch({
-	'when not divisible by given divisor': {
-		topic: function () {
-			var schema = createSchema(schemaIncorrectDivisibleBy);
-			schema.validate(obj, this.callback);
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
+	'when complies with minimum': objectShouldBeValid(obj, schemaCorrectMinimum),
+	'when exceeds minimum': objectShouldBeInvalid(obj, schemaIncorrectMinimum),
+	'when complies with exclusive minimum': objectShouldBeValid(obj, schemaCorrectExclusiveMinimum),
+	'when exceeds exclusive minimum': objectShouldBeInvalid(obj, schemaIncorrectExclusiveMinimum),
+	'when complies with maximum': objectShouldBeValid(obj, schemaCorrectMaximum),
+	'when exceeds maximum': objectShouldBeInvalid(obj, schemaIncorrectMaximum),
+	'when complies with exclusive maximum': objectShouldBeValid(obj, schemaCorrectExclusiveMaximum),
+	'when exceeds exclusive maximum': objectShouldBeInvalid(obj, schemaIncorrectExclusiveMaximum),
+	'when divisible by given divisor': objectShouldBeValid(obj, schemaCorrectDivisibleBy),
+	'when not divisible by given divisor': objectShouldBeInvalid(obj, schemaIncorrectDivisibleBy)
 }).export(module);
