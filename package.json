@@ -1,8 +1,7 @@
 {
   "name": "json-gate",
   "description": "JSON schema validator",
-  "version": "0.0.1",
-  "private": true,
+  "version": "0.8.0",
   "author": {
     "name": "Ofer Reichman",
     "email": "oferei@gmail.com"
@@ -15,10 +14,6 @@
   ],
   "dependencies": {
   },
-  "devDependencies": {
-    "should": "*",
-    "vows": "*"
-  },
   "keywords": [
     "json",
     "schema",
@@ -29,6 +24,10 @@
   "main": "lib/json-gate.js",
   "scripts": {
     "test": "node_modules\\.bin\\vows --spec"
+  },
+  "devDependencies": {
+    "should": "*",
+    "vows": "*"
   },
   "engines": {
     "node": "*"
