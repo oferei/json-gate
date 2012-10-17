@@ -219,7 +219,7 @@ Defines the maximum length of the string.
 Applies only to instances of type `'string'`.
 
 A regular expression string.
-The instance must match it in order to be valid.
+The instance string must match it.
 
 ### minimum
 
@@ -266,7 +266,8 @@ Not supported yet.
 
 ### enum
 
-Not supported yet.
+An array containing all possible values.
+The instance must equal one of the values.
 
 ### disallow
 

@@ -7,7 +7,7 @@ var jsonly = require('..'),
 	createSchema = jsonly.createSchema,
 	config = require('./config');
 
-var schemaValid = {
+var schemaValidRequired = {
 	type: 'object',
 	properties: {
 		mandatory: {
@@ -16,7 +16,7 @@ var schemaValid = {
 	}
 };
 
-var schemaInvalid = {
+var schemaInvalidRequired = {
 	type: 'object',
 	properties: {
 		mandatory: {
@@ -29,7 +29,7 @@ vows.describe('Schema Required').addBatch({
 	'when required attribute is a boolean': {
 		topic: function () {
 			try {
-				this.callback(null, createSchema(schemaValid));
+				this.callback(null, createSchema(schemaValidRequired));
 			} catch(err) {
 				this.callback(err);
 			}
@@ -43,7 +43,7 @@ vows.describe('Schema Required').addBatch({
 	'when required attribute is not a boolean': {
 		topic: function () {
 			try {
-				this.callback(null, createSchema(schemaInvalid));
+				this.callback(null, createSchema(schemaInvalidRequired));
 			} catch(err) {
 				this.callback(err);
 			}
