@@ -1,10 +1,10 @@
 // this test is run by Vows (as all files matching *test.js)
 
-var vows = require('vows'),
-	should = require('should');
+var vows = require('vows');
 
-var createSchema = require('..').createSchema,
-	config = require('./config');
+var common = require('./common'),
+	schemaShouldBeValid = common.schemaShouldBeValid,
+	schemaShouldBeInvalid = common.schemaShouldBeInvalid;
 
 var schemaNotAnObject = 'not-an-object';
 
@@ -28,111 +28,11 @@ var schemaEmptyArray = {
 };
 
 vows.describe('Schema Basic').addBatch({
-	'when schema is undefined': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(undefined));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when schema is not an object': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaNotAnObject));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when type attribue is missing': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaWithoutType));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when type attribute is not a string': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidType));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when type attribute is neither \'object\' nor \'array\'': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInappropriateType));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when type attribute is \'object\'': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaEmptyObject));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when type attribute is \'array\'': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaEmptyArray));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
+	'when schema is undefined': schemaShouldBeInvalid(undefined),
+	'when schema is not an object': schemaShouldBeInvalid(schemaNotAnObject),
+	'when type attribue is missing': schemaShouldBeInvalid(schemaWithoutType),
+	'when type attribute is not a string': schemaShouldBeInvalid(schemaInvalidType),
+	'when type attribute is neither \'object\' nor \'array\'': schemaShouldBeInvalid(schemaInappropriateType),
+	'when type attribute is \'object\'': schemaShouldBeValid(schemaEmptyObject),
+	'when type attribute is \'array\'': schemaShouldBeValid(schemaEmptyArray)
 }).export(module);

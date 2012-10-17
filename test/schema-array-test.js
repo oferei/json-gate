@@ -1,10 +1,10 @@
 // this test is run by Vows (as all files matching *test.js)
 
-var vows = require('vows'),
-	should = require('should');
+var vows = require('vows');
 
-var createSchema = require('..').createSchema,
-	config = require('./config');
+var common = require('./common'),
+	schemaShouldBeValid = common.schemaShouldBeValid,
+	schemaShouldBeInvalid = common.schemaShouldBeInvalid;
 
 var schemaValidItems = {
 	type: 'array',
@@ -111,189 +111,16 @@ var schemaSuperfluousAdditionalItemsNonTuple = {
 };
 
 vows.describe('Schema Array').addBatch({
-	'when items is a schema': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidItems));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when items is a tuple': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidItemsTuple));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when items is a tuple containing properties': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidItemsTupleWithProperties));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when items is a string': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidItemsString));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when items is an array': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidItemsArray));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when items is an invalid schema': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidItemsInvalidSchema));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when items array contains an invalid schema': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidItemsTupleWithInvalidProperties));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when additionalItems is a valid schema': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidAdditionalItems));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when additionalItems is an invalid schema': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidAdditionalItemsInvalidSchema));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when additionalItems is false': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidNoAdditionalItems));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when additionalItems is true': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidAdditionalItemsTrue));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			should.not.exist(result);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when additionalItems is provided although items is not a tuple': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaSuperfluousAdditionalItemsNonTuple));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
+	'when items is a schema': schemaShouldBeValid(schemaValidItems),
+	'when items is a tuple': schemaShouldBeValid(schemaValidItemsTuple),
+	'when items is a tuple containing properties': schemaShouldBeValid(schemaValidItemsTupleWithProperties),
+	'when items is a string': schemaShouldBeInvalid(schemaInvalidItemsString),
+	'when items is an array': schemaShouldBeInvalid(schemaInvalidItemsArray),
+	'when items is an invalid schema': schemaShouldBeInvalid(schemaInvalidItemsInvalidSchema),
+	'when items array contains an invalid schema': schemaShouldBeInvalid(schemaInvalidItemsTupleWithInvalidProperties),
+	'when additionalItems is a valid schema': schemaShouldBeValid(schemaValidAdditionalItems),
+	'when additionalItems is an invalid schema': schemaShouldBeInvalid(schemaValidAdditionalItemsInvalidSchema),
+	'when additionalItems is false': schemaShouldBeValid(schemaValidNoAdditionalItems),
+	'when additionalItems is true': schemaShouldBeInvalid(schemaInvalidAdditionalItemsTrue),
+	'when additionalItems is provided although items is not a tuple': schemaShouldBeValid(schemaSuperfluousAdditionalItemsNonTuple)
 }).export(module);

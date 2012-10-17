@@ -1,10 +1,10 @@
 // this test is run by Vows (as all files matching *test.js)
 
-var vows = require('vows'),
-	should = require('should');
+var vows = require('vows');
 
-var createSchema = require('..').createSchema,
-	config = require('./config');
+var common = require('./common'),
+	schemaShouldBeValid = common.schemaShouldBeValid,
+	schemaShouldBeInvalid = common.schemaShouldBeInvalid;
 
 var schemaValidMinLength = {
 	type: 'object',
@@ -67,93 +67,10 @@ var schemaInvalidPattern = {
 };
 
 vows.describe('Schema String').addBatch({
-	'when minLength attribute is an integer': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidMinLength));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when minLength attribute is not an integer': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidMinLength));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when maxLength attribute is an integer': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidMaxLength));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when maxLength attribute is not an integer': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidMaxLength));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when pattern attribute is a string': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidPattern));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when pattern attribute is not a string': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidPattern));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
+	'when minLength attribute is an integer': schemaShouldBeValid(schemaValidMinLength),
+	'when minLength attribute is not an integer': schemaShouldBeInvalid(schemaInvalidMinLength),
+	'when maxLength attribute is an integer': schemaShouldBeValid(schemaValidMaxLength),
+	'when maxLength attribute is not an integer': schemaShouldBeInvalid(schemaInvalidMaxLength),
+	'when pattern attribute is a string': schemaShouldBeValid(schemaValidPattern),
+	'when pattern attribute is not a string': schemaShouldBeInvalid(schemaInvalidPattern)
 }).export(module);

@@ -1,10 +1,10 @@
 // this test is run by Vows (as all files matching *test.js)
 
-var vows = require('vows'),
-	should = require('should');
+var vows = require('vows');
 
-var createSchema = require('..').createSchema,
-	config = require('./config');
+var common = require('./common'),
+	schemaShouldBeValid = common.schemaShouldBeValid,
+	schemaShouldBeInvalid = common.schemaShouldBeInvalid;
 
 var schemaValidDefault = {
 	type: 'object',
@@ -27,34 +27,7 @@ var schemaInvalidDefault = {
 };
 
 vows.describe('Schema Default').addBatch({
-	'when default value has correct type': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidDefault));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when default value has incorrect type': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidDefault));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
+	'when default value has correct type': schemaShouldBeValid(schemaValidDefault),
+	'when default value has incorrect type': schemaShouldBeInvalid(schemaInvalidDefault)
 }).export(module);
 	

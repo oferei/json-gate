@@ -1,10 +1,10 @@
 // this test is run by Vows (as all files matching *test.js)
 
-var vows = require('vows'),
-	should = require('should');
+var vows = require('vows');
 
-var createSchema = require('..').createSchema,
-	config = require('./config');
+var common = require('./common'),
+	schemaShouldBeValid = common.schemaShouldBeValid,
+	schemaShouldBeInvalid = common.schemaShouldBeInvalid;
 
 var schemaValid = {
 	type: 'object',
@@ -101,93 +101,10 @@ var schemaUnionTypeWithInvalidSchema = {
 };
 
 vows.describe('Schema Disallow').addBatch({
-	'when attributes are all simple types': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValid));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when attribute is neither a string nor an array': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalid));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when attribute is a union type with simple types': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaSimpleUnionType));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when attribute is a union type with only one simple type': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidUnionTypeWithOnlyOne));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when attribute is a union type with a valid schema': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaUnionTypeWithValidSchema));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when attribute is a union type with an invalid schema': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaUnionTypeWithInvalidSchema));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
+	'when attributes are all simple types': schemaShouldBeValid(schemaValid),
+	'when attribute is neither a string nor an array': schemaShouldBeInvalid(schemaInvalid),
+	'when attribute is a union type with simple types': schemaShouldBeValid(schemaSimpleUnionType),
+	'when attribute is a union type with only one simple type': schemaShouldBeInvalid(schemaInvalidUnionTypeWithOnlyOne),
+	'when attribute is a union type with a valid schema': schemaShouldBeValid(schemaUnionTypeWithValidSchema),
+	'when attribute is a union type with an invalid schema': schemaShouldBeInvalid(schemaUnionTypeWithInvalidSchema)
 }).export(module);

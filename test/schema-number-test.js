@@ -1,10 +1,10 @@
 // this test is run by Vows (as all files matching *test.js)
 
-var vows = require('vows'),
-	should = require('should');
+var vows = require('vows');
 
-var createSchema = require('..').createSchema,
-	config = require('./config');
+var common = require('./common'),
+	schemaShouldBeValid = common.schemaShouldBeValid,
+	schemaShouldBeInvalid = common.schemaShouldBeInvalid;
 
 var schemaValidMinimum = {
 	type: 'object',
@@ -111,153 +111,14 @@ var schemaInvalidDivisibleBy = {
 };
 
 vows.describe('Schema Number').addBatch({
-	'when minimum attribute is a number': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidMinimum));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when minimum attribute is not a number': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidMinimum));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when exclusiveMinimum attribute is a boolean': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidExclusiveMinimum));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when exclusiveMinimum attribute is not a boolean': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidExclusiveMinimum));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when maximum attribute is a number': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidMaximum));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when maximum attribute is not a number': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidMaximum));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when exclusiveMaximum attribute is a boolean': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidExclusiveMaximum));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when exclusiveMaximum attribute is not a boolean': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidExclusiveMaximum));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
-}).addBatch({
-	'when divisibleBy attribute is a number': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaValidDivisibleBy));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get no error': function (err, schema) {
-			should.not.exist(err);
-			should.exist(schema);
-		}
-	}
-}).addBatch({
-	'when divisibleBy attribute is not a number': {
-		topic: function () {
-			try {
-				this.callback(null, createSchema(schemaInvalidDivisibleBy));
-			} catch(err) {
-				this.callback(err);
-			}
-		},
-		'we get an error': function (err, schema) {
-			should.exist(err);
-			if (config.verbose) {
-				console.log('Error:', err)
-			}
-		}
-	}
+	'when minimum attribute is a number': schemaShouldBeValid(schemaValidMinimum),
+	'when minimum attribute is not a number': schemaShouldBeInvalid(schemaInvalidMinimum),
+	'when exclusiveMinimum attribute is a boolean': schemaShouldBeValid(schemaValidExclusiveMinimum),
+	'when exclusiveMinimum attribute is not a boolean': schemaShouldBeInvalid(schemaInvalidExclusiveMinimum),
+	'when maximum attribute is a number': schemaShouldBeValid(schemaValidMaximum),
+	'when maximum attribute is not a number': schemaShouldBeInvalid(schemaInvalidMaximum),
+	'when exclusiveMaximum attribute is a boolean': schemaShouldBeValid(schemaValidExclusiveMaximum),
+	'when exclusiveMaximum attribute is not a boolean': schemaShouldBeInvalid(schemaInvalidExclusiveMaximum),
+	'when divisibleBy attribute is a number': schemaShouldBeValid(schemaValidDivisibleBy),
+	'when divisibleBy attribute is not a number': schemaShouldBeInvalid(schemaInvalidDivisibleBy)
 }).export(module);
