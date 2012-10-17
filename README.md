@@ -218,7 +218,8 @@ Defines the maximum length of the string.
 
 Applies only to instances of type `'string'`.
 
-Not supported yet.
+A regular expression string.
+The instance must match it in order to be valid.
 
 ### minimum
 

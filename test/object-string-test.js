@@ -51,6 +51,26 @@ var schemaIncorrectMaxLength = {
 	}
 };
 
+var schemaCorrectPattern = {
+	type: 'object',
+	properties: {
+		str: {
+			type: 'string',
+			pattern: '^Hello'
+		}
+	}
+};
+
+var schemaIncorrectPattern = {
+	type: 'object',
+	properties: {
+		str: {
+			type: 'string',
+			pattern: 'Hello$'
+		}
+	}
+};
+
 vows.describe('Object String').addBatch({
 	'when complies with minimum length': {
 		topic: function () {
@@ -91,6 +111,31 @@ vows.describe('Object String').addBatch({
 	'when exceeds maximum length': {
 		topic: function () {
 			var schema = createSchema(schemaIncorrectMaxLength);
+			schema.validate(obj, this.callback);
+		},
+		'we get an error': function (err, result) {
+			should.exist(err);
+			should.not.exist(result);
+			if (config.verbose) {
+				console.log('Error:', err)
+			}
+		}
+	}
+}).addBatch({
+	'when complies with pattern': {
+		topic: function () {
+			var schema = createSchema(schemaCorrectPattern);
+			schema.validate(obj, this.callback);
+		},
+		'we get no error': function (err, result) {
+			should.not.exist(err);
+			should.exist(result);
+		}
+	}
+}).addBatch({
+	'when does not comply with pattern': {
+		topic: function () {
+			var schema = createSchema(schemaIncorrectPattern);
 			schema.validate(obj, this.callback);
 		},
 		'we get an error': function (err, result) {
