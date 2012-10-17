@@ -4,7 +4,8 @@ _json-gate_ validates JSON objects against a JSON schema.
 In other words, it makes sure an object conforms to the type and structure that your code expects.
 For example, a server can use it to ensure input received from a client conforms to the API.
 
-The JSON schema can also help with documentation and collaboration. Copy it to your API document and everybody should understand exactly what is expected.
+The JSON schema can also help with documentation and collaboration.
+Copy it to your API document and everybody should understand exactly what is expected.
 
 _json-gate_ is extremely easy to use:
 * Intuitive - one function to create a schema, one function to use it.
