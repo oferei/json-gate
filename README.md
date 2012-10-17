@@ -7,10 +7,11 @@ For example, a server can use it to ensure input received from a client conforms
 The JSON schema can also help with documentation and collaboration. Copy it to your API document and everybody should understand exactly what is expected.
 
 _json-gate_ is extremely easy to use:
-* Intuitive - one function to create a schema, one function to use it
-* Both synchronous and asynchronous modes - your choice
-* Conforms to standard - no surprises
-* Well documented, in case you don't feel like digging into the IETF specifications
+* Intuitive - one function to create a schema, one function to use it.
+* Produces human-friendly, detailed error messages - ready to be shipped.
+* Conforms to standard - no relearning, no obligation, no surprises.
+* Well documented, in case you don't feel like digging into the IETF specifications.
+* Both synchronous and asynchronous modes - your choice.
 
 ## What's a JSON schema?
 
@@ -19,7 +20,7 @@ _json-gate_ is extremely easy to use:
 * Documentation - You can extract documentation information from a JSON Schema, match this documentation to your data, and use that information for user interaction.
 * Hyperlinking - You can pair your JSON data with the defining JSON Schema to build hyperlinks into parts of that JSON data.
 
-_json-gate_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft-zyp-json-schema-03), without the hyperlinking part.
+_json-gate_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/draft-zyp-json-schema-03), minus the hyperlinking and hyper schema parts.
 
 ## Example
 
@@ -90,10 +91,10 @@ Any _default_ values used will affect the original JSON object, even when callin
 A _JSON schema_ is defined as a JavaScript object containing various _attributes_.
 
 Let's start by analyzing the schema given in the example above.
-* The JSON object should be an object (as opposed to an array)
-* It should have a property named _query_, which should be a string with 1 to 64 characters
-* It may optionaly have a property named _maxResults_, which should be an integer with a maximum value of 20
-* If _maxResults_ is missing, it will be generated with a value of 10
+* The JSON object should be an object (as opposed to an array).
+* It should have a property named _query_, which should be a string with 1 to 64 characters.
+* It may optionaly have a property named _maxResults_, which should be an integer with a maximum value of 20.
+* If _maxResults_ is missing, it will be generated with a value of 10.
 
 JSON Schema properties can be nested: objects and arrays include other attributes, which may be objects and arrays.
 Notice that objects properties are unordered, whereas array items are ordered.
