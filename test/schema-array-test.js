@@ -110,6 +110,18 @@ var schemaSuperfluousAdditionalItemsNonTuple = {
 	additionalItems: false
 };
 
+var schemaValidUniqueItems = {
+	type: 'array',
+	items: { type: 'string' },
+	uniqueItems: true
+};
+
+var schemaInvalidUniqueItems = {
+	type: 'array',
+	items: { type: 'string' },
+	uniqueItems: 5
+};
+
 vows.describe('Schema Array').addBatch({
 	'when items is a schema': schemaShouldBeValid(schemaValidItems),
 	'when items is a tuple': schemaShouldBeValid(schemaValidItemsTuple),
@@ -122,5 +134,7 @@ vows.describe('Schema Array').addBatch({
 	'when additionalItems is an invalid schema': schemaShouldBeInvalid(schemaValidAdditionalItemsInvalidSchema),
 	'when additionalItems is false': schemaShouldBeValid(schemaValidNoAdditionalItems),
 	'when additionalItems is true': schemaShouldBeInvalid(schemaInvalidAdditionalItemsTrue),
-	'when additionalItems is provided although items is not a tuple': schemaShouldBeValid(schemaSuperfluousAdditionalItemsNonTuple)
+	'when additionalItems is provided although items is not a tuple': schemaShouldBeValid(schemaSuperfluousAdditionalItemsNonTuple),
+	'when uniqueItems is a boolean': schemaShouldBeValid(schemaValidUniqueItems),
+	'when uniqueItems is an integer': schemaShouldBeInvalid(schemaInvalidUniqueItems)
 }).export(module);

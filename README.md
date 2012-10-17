@@ -211,9 +211,7 @@ Defines the maximum number of values in an array.
 
 Applies only to instances of type `'array'`.
 
-This attribute indicates that all items in an array instance must be unique (contains no two identical values).
-
-Not supported yet.
+Indicates that all items in the array instance must be unique (contains no two identical values).
 
 ### minLength
 

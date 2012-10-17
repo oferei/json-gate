@@ -6,7 +6,7 @@ var common = require('./common'),
 	objectShouldBeValid = common.objectShouldBeValid,
 	objectShouldBeInvalid = common.objectShouldBeInvalid;
 
-var arrAllStrings = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+var arrWeekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 var arrTuple = [
 	'John',
@@ -55,6 +55,8 @@ var arrTuple2 = [
 	42
 ];
 
+var arrNotUnique = ['a', 'b', 'c', 'b', 'd'];
+
 var schemaAllStrings = {
 	type: 'array',
 	items: { type: 'string' }
@@ -94,8 +96,14 @@ var schemaNoAdditionalItems = {
 	additionalItems: false
 };
 
+var schemaUniqueStrings = {
+	type: 'array',
+	items: { type: 'string' },
+	uniqueItems: true
+};
+
 vows.describe('Object Array').addBatch({
-	'when passing strings for strings': objectShouldBeValid(arrAllStrings, schemaAllStrings),
+	'when passing strings for strings': objectShouldBeValid(arrWeekdays, schemaAllStrings),
 	'when passing non-strings for strings': objectShouldBeInvalid(arrTuple, schemaAllStrings),
 	'when passing a suitable tuple': objectShouldBeValid(arrTuple, schemaTupleWithProperties),
 	'when an element has wrong type': objectShouldBeInvalid(arrTupleInvalidType, schemaTupleWithProperties),
@@ -104,4 +112,6 @@ vows.describe('Object Array').addBatch({
 	'when additional items are wrong type': objectShouldBeInvalid(arrTuplePlusInvalidType, schemaAdditionalItems),
 	'when no additional types is respected': objectShouldBeValid(arrTuple2, schemaNoAdditionalItems),
 	'when no additional types is not respected': objectShouldBeInvalid(arrTuple, schemaNoAdditionalItems)
+	'when strings are unique as expected': objectShouldBeValid(arrWeekdays, schemaUniqueStrings),
+	'when strings are not unique as expected': objectShouldBeInvalid(arrNotUnique, schemaUniqueStrings)
 }).export(module);
