@@ -111,7 +111,7 @@ vows.describe('Object Array').addBatch({
 	'when additional items are correct type': objectShouldBeValid(arrTuplePlus, schemaAdditionalItems),
 	'when additional items are wrong type': objectShouldBeInvalid(arrTuplePlusInvalidType, schemaAdditionalItems),
 	'when no additional types is respected': objectShouldBeValid(arrTuple2, schemaNoAdditionalItems),
-	'when no additional types is not respected': objectShouldBeInvalid(arrTuple, schemaNoAdditionalItems)
+	'when no additional types is not respected': objectShouldBeInvalid(arrTuple, schemaNoAdditionalItems),
 	'when strings are unique as expected': objectShouldBeValid(arrWeekdays, schemaUniqueStrings),
 	'when strings are not unique as expected': objectShouldBeInvalid(arrNotUnique, schemaUniqueStrings)
 }).export(module);
