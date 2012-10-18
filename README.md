@@ -7,11 +7,12 @@ For example, a server can use it to ensure input received from a client conforms
 The JSON schema can also help with documentation and collaboration.
 Copy it to your API document and everybody should understand exactly what is expected.
 
-_json-gate_ is extremely easy to use:
-* Intuitive - one function to create a schema, one function to use it.
-* Produces human-friendly, detailed error messages - ready to be shipped.
+_json-gate_ likes you! It is...
+* Intuitive - API is super easy to use.
+* Produces human-friendly, detailed error messages - for both you and your customers.
 * Conforms to standard - no relearning, no obligation, no surprises.
 * Well documented, in case you don't feel like digging into the IETF specifications.
+Just keep reading, it's all here.
 * Both synchronous and asynchronous modes - your choice.
 
 ## What's a JSON schema?
@@ -59,13 +60,15 @@ _json-gate_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/dr
 ### _json-gate.createSchema_(jsonSchema)
 
 This function gets a JSON Schema definition and returns a new _Schema_ object.
-It may throw an error if the JSON Schema definition is malformed.
-The error message will describe exactly what part is invalid.
+It verifies that the schema is valid.
+If the latter is malformed an error will be thrown pinpointing the problem.
 
 ### _Schema.validate_(jsonObject)
 
-This function gets a JSON object and validates it.
+This function gets a JSON object and validates it against the schema.
 If the JSON object does not conform to the schema an error will be thrown (or returned, see _Synchronous/Asynchronous_ below).
+
+The functions stops after encountering an error. It does not return multiple errors.
 The function does not return a value.
 Be aware that the input JSON object may be edited _in-place_ if the _default_ attribute is used.
 
@@ -73,7 +76,10 @@ Be aware that the input JSON object may be edited _in-place_ if the _default_ at
 
 The error messages are human-friendly and detailed.
 For example: "JSON object property 'user.password': length is 3 when it should be at least 6".
-Ready to be shrink-wrapped and shipped in a 400 Bad Request response!
+Ready to be shrink-wrapped in a _400 Bad Request_ response and shipped to the client!
+
+Equaly helpful error message are produced in the case of a malformed schema, to assist you during development.
+For example: "Schema property 'num': 'exclusiveMaximum' attribute is a number when it should be a boolean".
 
 ### Synchronous/Asynchronous
 
