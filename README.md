@@ -19,6 +19,7 @@ Just keep reading, it's all here.
 ## What's a JSON schema?
 
 [JSON Schema](http://json-schema.org/) is a proposed Internet draft defining a JSON media type (application/schema+json) with the following goals:
+
 * Validation - You can use JSON Schema to validate your JSON data.
 * Documentation - You can extract documentation information from a JSON Schema, match this documentation to your data, and use that information for user interaction.
 * Hyperlinking - You can pair your JSON data with the defining JSON Schema to build hyperlinks into parts of that JSON data.
@@ -85,6 +86,7 @@ For example: "Schema property 'num': 'exclusiveMaximum' attribute is a number wh
 ### Synchronous/Asynchronous
 
 _Schema.validate_ can be called in two ways, to suit your needs:
+
 * Synchronously - as in the example above, with one parameter.
 As already stated, it returns nothing if the object checks out. Otherwise it throws an error.
 * Asynchronously - by providing a 2nd parameter: a callback function.
@@ -99,6 +101,7 @@ Any _default_ values used will affect the original JSON object, even when callin
 A _JSON schema_ is defined as a JavaScript object containing various _attributes_.
 
 Let's start by analyzing the schema given in the example above.
+
 * The JSON object should be an object (as opposed to an array).
 * It should have a property named _query_, which should be a string with 1 to 64 characters.
 * It may optionaly have a property named _maxResults_, which should be an integer with a maximum value of 20.
@@ -119,6 +122,7 @@ Terminology: in this section, *instance* refers to a JSON value (object or prope
 
 Defines the expected instance type.
 It can take one of two forms:
+
 * Simple type - any of the following: 'string', 'number', 'integer', 'boolean', 'object', 'array', 'null' or 'any'.
 * Union type - an array of simple types and/or schemas. The instance type should be one of the types in the array.
 
@@ -134,6 +138,7 @@ Note: The top level JSON object's _type_ must be either 'object' or 'array'.
 
 Defines the disallowed instance type. This is the opposite of _type_.
 It can take one of two forms:
+
 * Simple type - any of the following: 'string', 'number', 'integer', 'boolean', 'object', 'array', 'null' or 'any'.
 * Union type - an array of simple types and/or schemas. The instance type should not be any of the types in the array.
 For example, if _type_ is ['string', 'null'] then the instance may be neither a string nor null.
@@ -223,6 +228,7 @@ Example:
     }
 
 Note that using this attribute may cause instances to be validated more than once:
+
 * If a property name is defined by _properties_ and also matches a pattern in _patternProperties_.
 * If a property name matches more than one pattern in _patternProperties_.
 
@@ -232,6 +238,7 @@ Applies only to instances of type `'object'`.
 
 Defines a schema for all properties that are not explicitly defined by _properties_ and do not match any pattern in _patternProperties_.
 It can take one of two forms:
+
 * Schema - all the additional properties must be valid according to the schema.
 * False - additional properties are not allowed.
 
@@ -263,6 +270,7 @@ Applies only to instances of type `'array'`.
 
 Defines the items of the instance array.
 It can take one of two forms:
+
 * Schema - all the items in the array must be valid according to the schema.
 * Tuple typing - an array of schemas.
 Each position in the instance array must conform to the schema in the corresponding position for this array.
@@ -275,6 +283,7 @@ Applies only to instances of type `'array'`, and only together with the _tuple t
 
 _additionalItems_ defines the behavior when there are more items in the instance array than in the _items_ array.
 It can take one of two forms:
+
 * Schema - all the additional items must be valid according to the schema.
 * False - additional items are not allowed.
 
@@ -346,6 +355,7 @@ Defines the minimum value of the instance property.
 Applies only to instances of type `'number'`, and only together with the _minimum_ attribute.
 
 Defines the behavior of the _minimum_ attribute:
+
 * when true, _minimum_ is exclusive ("greater than")
 * when false, _minimum_ is inclusive ("greater than or equal")
 
@@ -372,6 +382,7 @@ Defines the maximum value of the instance property.
 Applies only to instances of type `'number'`, and only together with the _maximum_ attribute.
 
 Defines the behavior of the _maximum_ attribute:
+
 * when true, _maximum_ is exclusive ("less than")
 * when false, _maximum_ is inclusive ("less than or equal")
 
