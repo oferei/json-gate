@@ -87,9 +87,7 @@ var objNoPatternMatch = {
 var schemaPatternProperties = {
 	type: 'object',
 	patternProperties: {
-		'[0-9]': {
-			type: 'boolean'
-		}
+		'[0-9]': { type: 'boolean' }
 	}
 };
 

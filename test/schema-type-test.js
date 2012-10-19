@@ -9,57 +9,35 @@ var common = require('./common'),
 var schemaValid = {
 	type: 'object',
 	properties: {
-		str: {
-			type: 'string'
-		},
-		num: {
-			type: 'number'
-		},
-		int: {
-			type: 'integer'
-		},
-		bool: {
-			type: 'boolean'
-		},
-		obj: {
-			type: 'object'
-		},
-		arr: {
-			type: 'array'
-		},
-		z: {
-			type: 'null'
-		},
-		value: {
-			type: 'any'
-		}
+		str: { type: 'string' },
+		num: { type: 'number' },
+		int: { type: 'integer' },
+		bool: { type: 'boolean' },
+		obj: { type: 'object' },
+		arr: { type: 'array' },
+		z: { type: 'null' },
+		value: { type: 'any' }
 	}
 };
 
 var schemaInvalid = {
 	type: 'object',
 	properties: {
-		seven: {
-			type: 7
-		}
+		seven: { type: 7 }
 	}
 };
 
 var schemaSimpleUnionType = {
 	type: 'object',
 	properties: {
-		nullable: {
-			type: ['string', 'null']
-		}
+		nullable: { type: ['string', 'null'] }
 	}
 };
 
 var schemaInvalidUnionTypeWithOnlyOne = {
 	type: 'object',
 	properties: {
-		schizo: {
-			type: ['string']
-		}
+		schizo: { type: ['string'] }
 	}
 };
 
@@ -71,9 +49,7 @@ var schemaUnionTypeWithValidSchema = {
 				{
 					type: 'object',
 					properties: {
-						num: {
-							type: 'number'
-						}
+						num: { type: 'number' }
 					}
 				}
 			]

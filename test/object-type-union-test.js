@@ -21,9 +21,7 @@ var objInteger = {
 var schemaUnionType = {
 	type: 'object',
 	properties: {
-		nullable: {
-			type: ['string', 'null']
-		}
+		nullable: { type: ['string', 'null'] }
 	}
 };
 
