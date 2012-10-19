@@ -112,7 +112,7 @@ See Attributes section below to learn about more possibilities.
 
 Below are all the supported attributes.
 
-Terminology: for this specification, *instance* refers to a JSON value (object or property) that the schema will be describing and validating.
+Terminology: in this section, *instance* refers to a JSON value (object or property) that the schema will be describing and validating.
 
 ### type
 
@@ -141,11 +141,34 @@ For example, if _type_ is ['string', 'null'] then the instance may be neither a 
 
 A boolean indicating whether an instance is mandatory (true) or optional (false).
 
+Example with a mandatory property and an optional one:
+
+    {
+        type: 'object',
+        properties: {
+            query: {
+                type: 'string',
+                required: true
+            },
+            safeSearch: {
+                type: 'string',
+                enum: ['off', 'moderate', 'strict']
+            }
+        }
+    }
+
 The default is false (optional).
 
 ### default
 
 Defines the default value of the instance when the instance is undefined.
+
+Example:
+
+    maxResults: {
+        type: 'integer',
+        default: 10
+    }
 
 The JSON object is edited in-place.
 In other words, the default values are set to the original JSON object, not a returned copy.
@@ -242,6 +265,7 @@ It can take one of two forms:
 * Schema - all the items in the array must be valid according to the schema.
 * Tuple typing - an array of schemas.
 Each position in the instance array must conform to the schema in the corresponding position for this array.
+The instance array is not required to contain all defined items.
 Additional items are allowed, disallowed, or constrained by the _additionalItems_ attribute.
 
 ### additionalItems
@@ -252,6 +276,17 @@ _additionalItems_ defines the behavior when there are more items in the instance
 It can take one of two forms:
 * Schema - all the additional items must be valid according to the schema.
 * False - additional items are not allowed.
+
+Example - a string, an integer and the rest are booleans:
+
+    {
+        type: 'array',
+        items: [
+            { type: 'string' },
+            { type: 'integer' }
+        ],
+        additionalItems: { type: 'boolean' }
+    }
 
 The default is an empty schema, which allows additional items of any type.
 
@@ -271,7 +306,7 @@ Defines the maximum number of values in an array.
 
 Applies only to instances of type `'array'`.
 
-Indicates that all items in the array instance must be unique (contains no two identical values).
+A boolean that indicates whether all items in the array instance must be unique (contains no two identical values).
 
 ### minLength
 
@@ -292,6 +327,13 @@ Applies only to instances of type `'string'`.
 A string containing a regular expression.
 The instance string must match it.
 
+Example:
+
+    mongodbId: {
+        type: 'string',
+        pattern: '[0-9A-Fa-f]{24}'
+    }
+
 ### minimum
 
 Applies only to instances of type `'number'`.
@@ -305,6 +347,16 @@ Applies only to instances of type `'number'`, and only together with the _minimu
 Defines the behavior of the _minimum_ attribute:
 * when true, _minimum_ is exclusive ("greater than")
 * when false, _minimum_ is inclusive ("greater than or equal")
+
+Example:
+
+    rand: {
+        type: 'number',
+        minimum: 0,
+        exclusiveMinimum: false,
+        maximum: 1,
+        exclusiveMaximum: true
+    }
 
 The default is false.
 
@@ -322,6 +374,16 @@ Defines the behavior of the _maximum_ attribute:
 * when true, _maximum_ is exclusive ("less than")
 * when false, _maximum_ is inclusive ("less than or equal")
 
+Example:
+
+    rand: {
+        type: 'number',
+        minimum: 0,
+        exclusiveMinimum: false,
+        maximum: 1,
+        exclusiveMaximum: true
+    }
+
 The default is false.
 
 ### divisibleBy
@@ -334,3 +396,37 @@ This value may not be 0.
 ### format
 
 Not supported yet.
+
+### title
+
+A string that provides a short description of instance property.
+
+It allows to document the JSON schema.
+It has no effect on the validation process.
+
+Example:
+
+    postalPlusFourCode: {
+        title: 'ZIP+4 code',
+        description: 'Zip+4 code: 5 digits dash 4 digits',
+        type: 'string',
+        pattern: '^[0-9]{5}-[0-9]{4}$'
+    }
+
+### description
+
+A string that provides a full description of the purpose of the instance property.
+
+It allows to document the JSON schema.
+It has no effect on the validation process.
+
+Example:
+
+    {
+        description: 'A person',
+        type: 'object',
+        properties: {
+            name: { type: 'string' },
+            age: { type: 'integer' }
+        }
+    }
