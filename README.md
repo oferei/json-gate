@@ -8,6 +8,7 @@ The JSON schema can also help with documentation and collaboration.
 Copy it to your API document and everybody should understand exactly what is expected.
 
 _json-gate_ likes you! It is...
+
 * Intuitive - API is super easy to use.
 * Produces human-friendly, detailed error messages - for both you and your customers.
 * Conforms to standard - no relearning, no obligation, no surprises.
