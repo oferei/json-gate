@@ -44,7 +44,8 @@ _json-gate_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/dr
     			maximum: 20,
     			default: 10
     		}
-    	}
+    	},
+        additionalProperties: false
     });
 
     try {
@@ -106,6 +107,7 @@ Let's start by analyzing the schema given in the example above.
 * It should have a property named _query_, which should be a string with 1 to 64 characters.
 * It may optionaly have a property named _maxResults_, which should be an integer with a maximum value of 20.
 * If _maxResults_ is missing, it will be generated with a value of 10.
+* Additional properties (other than _query_ and _maxResults_) are not allowed.
 
 JSON Schema properties can be nested: objects and arrays include other attributes, which may be objects and arrays.
 Notice that objects properties are unordered, whereas array items are ordered.
