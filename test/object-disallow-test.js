@@ -118,7 +118,7 @@ var schemaNonAny = {
 	}
 };
 
-vows.describe('Object Type').addBatch({
+vows.describe('Object Disallow').addBatch({
 	'when a string is passed for a non-string': objectShouldBeInvalid(objString, schemaNonString),
 	'when trying to pass a number for a non-string': objectShouldBeValid(objNumber, schemaNonString),
 	'when a number is passed for a non-number': objectShouldBeInvalid(objNumber, schemaNonNumber),
