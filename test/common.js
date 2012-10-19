@@ -15,8 +15,8 @@ exports.schemaShouldBeValid = function (schema, options) {
 	};
 	var vow = (options && options.vow) || 'we get no error';
 	context[vow] = function (err, schema) {
-		if (err && config.verbose) {
-			console.log('Error:', err)
+		if (config.verbose && err) {
+			console.log('Error:', err.stack)
 		}
 		should.not.exist(err);
 		should.exist(schema);
@@ -38,6 +38,9 @@ exports.schemaShouldBeInvalid = function (schema, options) {
 	};
 	var vow = (options && options.vow) || 'we get an error';
 	context[vow] = function (err, schema) {
+		if (config.verbose && schema && (schema instanceof Error)) {
+			console.log('Schema is the error:', schema.stack)
+		}
 		should.exist(err);
 		err.should.be.instanceof(Error); // can't trust vows
 		if (config.verbose) {
@@ -57,7 +60,7 @@ exports.objectShouldBeValid = function (obj, schemaDef, options) {
 	};
 	var vow = (options && options.vow) || 'we get no error';
 	context[vow] = function (err, result) {
-		if (err && config.verbose) {
+		if (config.verbose && err) {
 			console.log('Error:', err)
 		}
 		should.not.exist(err);

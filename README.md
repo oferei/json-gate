@@ -120,7 +120,10 @@ Defines the expected instance type.
 It can take one of two forms:
 * Simple type - any of the following: 'string', 'number', 'integer', 'boolean', 'object', 'array', 'null' or 'any'.
 * Union type - an array of simple types and/or schemas. The instance type should be one of the types in the array.
-For example, if _type_ is ['string', 'null'] then the instance may be either a string or null.
+
+Example - instance should be either a string or null:
+
+    type: ['string', 'null']
 
 The default is 'any'.
 
@@ -152,28 +155,77 @@ In other words, the default values are set to the original JSON object, not a re
 An array containing all possible values.
 The instance must equal one of the values.
 
+Example:
+
+    enum: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
 ### properties
 
 Applies only to instances of type `'object'`.
 
 Defines the properties of the instance object.
-Properties are considered unordered, the order of the instance properties may be in any order.
+The _properties_ attribute is an object, matching properties to their valid schema.
+
+Example:
+
+    {
+        type: 'object',
+        properties: {
+            name: { type: 'string' },
+            age: { type: 'integer' }
+        }
+    }
 
 The default is an empty object.
+
+Note: properties are considered unordered, the order of the instance properties may be in any order.
 
 ### patternProperties
 
 Applies only to instances of type `'object'`.
 
-Not supported yet.
+This attribute is similar to the _properties_ attribute, but the keys are regular expression patterns instead of property names.
+Any instance property whose name fits a pattern must be valid according to the appropriate schema.
+
+Example:
+
+    {
+        type: 'object',
+        properties: {
+            '^sz': { type: 'string' },
+            '^n': { type: 'number' },
+            '^b': { type: 'boolean' }
+        }
+    }
+
+Note that using this attribute may cause instances to be validated more than once:
+* If a property name is defined by _properties_ and also matches a pattern in _patternProperties_.
+* If a property name matches more than one pattern in _patternProperties_.
 
 ### additionalProperties
 
 Applies only to instances of type `'object'`.
 
-Not supported yet.
-Current behavior is as if this attribute was set to the default, an empty schema,
-which means that additional properties that are not defined by the _properties_ attribute are allowed.
+Defines a schema for all properties that are not explicitly defined by _properties_ and do not match any pattern in _patternProperties_.
+It can take one of two forms:
+* Schema - all the additional properties must be valid according to the schema.
+* False - additional properties are not allowed.
+
+Example:
+
+    {
+        type: 'object',
+        properties: {
+            id: 'integer',
+            name: 'string'
+        },
+        patternProperties: {
+            '^_debug': { type: 'any' }
+        },
+        additionalProperties: false
+    }
+
+The default is an empty schema, which allows any value for additional properties.
 
 ### dependencies
 
@@ -237,7 +289,7 @@ Defines the maximum length of the string.
 
 Applies only to instances of type `'string'`.
 
-A regular expression string.
+A string containing a regular expression.
 The instance string must match it.
 
 ### minimum

@@ -6,7 +6,7 @@ var common = require('./common'),
 	objectShouldBeValid = common.objectShouldBeValid,
 	objectShouldBeInvalid = common.objectShouldBeInvalid;
 
-var obj = {
+var objNested = {
 	str: 'top',
 	obj1: {
 		num: 42,
@@ -19,7 +19,20 @@ var obj = {
 	}
 };
 
-var schemaValid = {
+var objNestedMissing = {
+	str: 'top',
+	obj1: {
+		num: 42,
+		obj2: {
+			bool: false,
+			obj3: {
+				str2: 'you are here'
+			}
+		}
+	}
+};
+
+var schemaNested = {
 	type: 'object',
 	properties: {
 		str: {
@@ -59,6 +72,74 @@ var schemaValid = {
 	}
 };
 
+var objNumToBoolean = {
+	3: true
+};
+
+var objNumToString = {
+	3: 'dog'
+};
+
+var objNoPatternMatch = {
+	zzz: 'whatever I want'
+};
+
+var schemaPatternProperties = {
+	type: 'object',
+	patternProperties: {
+		'[0-9]': {
+			type: 'boolean'
+		}
+	}
+};
+
+var objNoAdditional = {
+	str: 'hi',
+	3: true
+};
+
+var objAdditionalInteger = {
+	str: 'hi',
+	3: true,
+	extra: 42
+};
+
+var objAdditionalArray = {
+	str: 'hi',
+	3: true,
+	extra: [42]
+};
+
+var schemaNoAdditionalProperties = {
+	type: 'object',
+	properties: {
+		str: { type: 'string' }
+	},
+	patternProperties: {
+		'[0-9]': { type: 'boolean' }
+	},
+	additionalProperties: false
+};
+
+var schemaAdditionalPropertiesInteger = {
+	type: 'object',
+	properties: {
+		str: { type: 'string' }
+	},
+	patternProperties: {
+		'[0-9]': { type: 'boolean' }
+	},
+	additionalProperties: { type: 'integer' }
+};
+
 vows.describe('Object Object').addBatch({
-	'when validating nested object': objectShouldBeValid(obj, schemaValid)
+	'when nested object is valid': objectShouldBeValid(objNested, schemaNested),
+	'when nested object is missing a property': objectShouldBeInvalid(objNestedMissing, schemaNested),
+	'when property matches pattern and correct type': objectShouldBeValid(objNumToBoolean, schemaPatternProperties),
+	'when property matches pattern and wrong type': objectShouldBeInvalid(objNumToString, schemaPatternProperties),
+	'when no property matches pattern': objectShouldBeValid(objNoPatternMatch, schemaPatternProperties),
+	'when no additional properties is respected': objectShouldBeValid(objNoAdditional, schemaNoAdditionalProperties),
+	'when no additional properties is not respected': objectShouldBeInvalid(objAdditionalInteger, schemaNoAdditionalProperties),
+	'when additional property is correct type': objectShouldBeValid(objAdditionalInteger, schemaAdditionalPropertiesInteger),
+	'when additional property is wrong type': objectShouldBeInvalid(objAdditionalArray, schemaAdditionalPropertiesInteger)
 }).export(module);
