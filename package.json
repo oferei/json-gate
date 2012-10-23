@@ -1,7 +1,7 @@
 {
   "name": "json-gate",
   "description": "A friendly JSON schema validator",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "author": {
     "name": "Ofer Reichman",
     "email": "oferei@gmail.com"
