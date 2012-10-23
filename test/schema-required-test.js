@@ -26,6 +26,6 @@ var schemaInvalidRequired = {
 
 vows.describe('Schema Required').addBatch({
 	'when required attribute is a boolean': schemaShouldBeValid(schemaValidRequired),
-	'when required attribute is not a boolean': schemaShouldBeInvalid(schemaInvalidRequired)
+	'when required attribute is not a boolean': schemaShouldBeInvalid(schemaInvalidRequired, { errMsg: 'Schema property \'mandatory\': \'required\' attribute is a string when it should be a boolean' })
 }).export(module);
 	

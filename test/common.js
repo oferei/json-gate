@@ -46,6 +46,9 @@ exports.schemaShouldBeInvalid = function (schema, options) {
 		if (config.verbose) {
 			console.log('Error:', err)
 		}
+		if (options && options.errMsg) {
+			err.should.have.property('message', options.errMsg);
+		}
 		if (options && options.post) { options.post(err, schema); }
 	};
 	return context;
@@ -86,6 +89,9 @@ exports.objectShouldBeInvalid = function (obj, schemaDef, options) {
 		should.not.exist(result);
 		if (config.verbose) {
 			console.log('Error:', err)
+		}
+		if (options && options.errMsg) {
+			err.should.have.property('message', options.errMsg);
 		}
 		if (options && options.post) { options.post(err, result); }
 	};

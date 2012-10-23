@@ -71,12 +71,12 @@ var schemaUnionTypeWithSchema = {
 };
 
 vows.describe('Object Type').addBatch({
-	'when a string is passed for either a string or a null': objectShouldBeValid(objString, schemaUnionType),
-	'when a null is passed for either a string or a null': objectShouldBeValid(objNull, schemaUnionType),
-	'when trying to pass an integer for either a string or a null': objectShouldBeInvalid(objInteger, schemaUnionType),
-	'when a string is passed for either a string or a null or a human': objectShouldBeValid(objString, schemaUnionTypeWithSchema),
-	'when a null is passed for either a string or a null or a human': objectShouldBeValid(objNull, schemaUnionTypeWithSchema),
-	'when a man is passed for either a string or a null or a human': objectShouldBeValid(objMan, schemaUnionTypeWithSchema),
-	'when a woman is passed for either a string or a null or a human': objectShouldBeValid(objWoman, schemaUnionTypeWithSchema),
-	'when trying to pass an alien for either a string or a null or a human': objectShouldBeInvalid(objAlien, schemaUnionTypeWithSchema)
+	'when a string is passed for either a string or null': objectShouldBeValid(objString, schemaUnionType),
+	'when null is passed for either a string or null': objectShouldBeValid(objNull, schemaUnionType),
+	'when trying to pass an integer for either a string or null': objectShouldBeInvalid(objInteger, schemaUnionType, { errMsg: 'JSON object property \'nullable\' is an integer when it should be either a string or null' }),
+	'when a string is passed for either a string or null or a human': objectShouldBeValid(objString, schemaUnionTypeWithSchema),
+	'when null is passed for either a string or null or a human': objectShouldBeValid(objNull, schemaUnionTypeWithSchema),
+	'when a man is passed for either a string or null or a human': objectShouldBeValid(objMan, schemaUnionTypeWithSchema),
+	'when a woman is passed for either a string or null or a human': objectShouldBeValid(objWoman, schemaUnionTypeWithSchema),
+	'when trying to pass an alien for either a string or null or a human': objectShouldBeInvalid(objAlien, schemaUnionTypeWithSchema, { errMsg: 'JSON object property \'nullable\' is an object when it should be either a string or null or a schema' })
 }).export(module);

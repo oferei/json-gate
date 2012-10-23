@@ -68,9 +68,9 @@ var schemaInvalidPattern = {
 
 vows.describe('Schema String').addBatch({
 	'when minLength attribute is an integer': schemaShouldBeValid(schemaValidMinLength),
-	'when minLength attribute is not an integer': schemaShouldBeInvalid(schemaInvalidMinLength),
+	'when minLength attribute is not an integer': schemaShouldBeInvalid(schemaInvalidMinLength, { errMsg: 'Schema property \'str\': \'minLength\' attribute is a number when it should be an integer' }),
 	'when maxLength attribute is an integer': schemaShouldBeValid(schemaValidMaxLength),
-	'when maxLength attribute is not an integer': schemaShouldBeInvalid(schemaInvalidMaxLength),
+	'when maxLength attribute is not an integer': schemaShouldBeInvalid(schemaInvalidMaxLength, { errMsg: 'Schema property \'str\': \'maxLength\' attribute is a number when it should be an integer' }),
 	'when pattern attribute is a string': schemaShouldBeValid(schemaValidPattern),
-	'when pattern attribute is not a string': schemaShouldBeInvalid(schemaInvalidPattern)
+	'when pattern attribute is not a string': schemaShouldBeInvalid(schemaInvalidPattern, { errMsg: 'Schema property \'str\': \'pattern\' attribute is an object when it should be a string' })
 }).export(module);

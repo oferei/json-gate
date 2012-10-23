@@ -132,12 +132,12 @@ var schemaAdditionalPropertiesInteger = {
 
 vows.describe('Object Object').addBatch({
 	'when nested object is valid': objectShouldBeValid(objNested, schemaNested),
-	'when nested object is missing a property': objectShouldBeInvalid(objNestedMissing, schemaNested),
+	'when nested object is missing a property': objectShouldBeInvalid(objNestedMissing, schemaNested, { errMsg: 'JSON object property \'obj1.obj2.obj3.str\' is required' }),
 	'when property matches pattern and correct type': objectShouldBeValid(objNumToBoolean, schemaPatternProperties),
-	'when property matches pattern and wrong type': objectShouldBeInvalid(objNumToString, schemaPatternProperties),
+	'when property matches pattern and wrong type': objectShouldBeInvalid(objNumToString, schemaPatternProperties, { errMsg: 'JSON object property \'3\' is a string when it should be a boolean' }),
 	'when no property matches pattern': objectShouldBeValid(objNoPatternMatch, schemaPatternProperties),
 	'when no additional properties is respected': objectShouldBeValid(objNoAdditional, schemaNoAdditionalProperties),
-	'when no additional properties is not respected': objectShouldBeInvalid(objAdditionalInteger, schemaNoAdditionalProperties),
+	'when no additional properties is not respected': objectShouldBeInvalid(objAdditionalInteger, schemaNoAdditionalProperties, { errMsg: 'JSON object property \'extra\' is not explicitly defined and therefore not allowed' }),
 	'when additional property is correct type': objectShouldBeValid(objAdditionalInteger, schemaAdditionalPropertiesInteger),
-	'when additional property is wrong type': objectShouldBeInvalid(objAdditionalArray, schemaAdditionalPropertiesInteger)
+	'when additional property is wrong type': objectShouldBeInvalid(objAdditionalArray, schemaAdditionalPropertiesInteger, { errMsg: 'JSON object property \'extra\' is an array when it should be an integer' })
 }).export(module);

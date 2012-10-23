@@ -49,6 +49,7 @@ vows.describe('Sync-Async').addBatch({
 			if (config.verbose) {
 				console.log('Error:', err)
 			}
+			err.should.have.property('message', 'JSON object is an object when it should be an array');
 		}
 	}
 }).addBatch({
@@ -75,6 +76,7 @@ vows.describe('Sync-Async').addBatch({
 			if (config.verbose) {
 				console.log('Error:', err)
 			}
+			err.should.have.property('message', 'JSON object is an object when it should be an array');
 		}
 	}
 }).export(module);

@@ -64,13 +64,13 @@ var schemaEnum = {
 
 vows.describe('Object Enum').addBatch({
 	'when string is in enum': objectShouldBeValid(objString, schemaEnum),
-	'when string is not in enum': objectShouldBeInvalid(objWrongString, schemaEnum),
+	'when string is not in enum': objectShouldBeInvalid(objWrongString, schemaEnum, { errMsg: 'JSON object property \'val\' is not in enum' }),
 	'when number is in enum': objectShouldBeValid(objNumber, schemaEnum),
-	'when number is not in enum': objectShouldBeInvalid(objWrongNumber, schemaEnum),
+	'when number is not in enum': objectShouldBeInvalid(objWrongNumber, schemaEnum, { errMsg: 'JSON object property \'val\' is not in enum' }),
 	'when array is in enum': objectShouldBeValid(objArray, schemaEnum),
-	'when array is not in enum': objectShouldBeInvalid(objWrongArray, schemaEnum),
+	'when array is not in enum': objectShouldBeInvalid(objWrongArray, schemaEnum, { errMsg: 'JSON object property \'val\' is not in enum' }),
 	'when object is in enum': objectShouldBeValid(objObject, schemaEnum),
-	'when object is not in enum': objectShouldBeInvalid(objWrongObject, schemaEnum),
+	'when object is not in enum': objectShouldBeInvalid(objWrongObject, schemaEnum, { errMsg: 'JSON object property \'val\' is not in enum' }),
 	'when nested object is in enum': objectShouldBeValid(objNested, schemaEnum),
-	'when nested object is not in enum': objectShouldBeInvalid(objWrongNested, schemaEnum)
+	'when nested object is not in enum': objectShouldBeInvalid(objWrongNested, schemaEnum, { errMsg: 'JSON object property \'val\' is not in enum' })
 }).export(module);

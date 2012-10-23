@@ -74,7 +74,7 @@ var schemaInvalidDefaultObject = {
 
 vows.describe('Schema Default').addBatch({
 	'when default value is a string as expected': schemaShouldBeValid(schemaValidDefaultString),
-	'when default value is not a string as expected': schemaShouldBeInvalid(schemaInvalidDefaultString),
+	'when default value is not a string as expected': schemaShouldBeInvalid(schemaInvalidDefaultString, { errMsg: 'Schema property \'str\': \'default\' attribute value is not valid according to the schema: JSON object is an integer when it should be a string' }),
 	'when default value conforms to the schema': schemaShouldBeValid(schemaValidDefaultObject),
-	'when default value does not conform to the schema': schemaShouldBeInvalid(schemaInvalidDefaultObject)
+	'when default value does not conform to the schema': schemaShouldBeInvalid(schemaInvalidDefaultObject, { errMsg: 'Schema property \'str\': \'default\' attribute value is not valid according to the schema: JSON object property \'num\' is a string when it should be a number' })
 }).export(module);

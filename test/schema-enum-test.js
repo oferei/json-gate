@@ -26,6 +26,6 @@ var schemaInvalidEnum = {
 
 vows.describe('Schema Enum').addBatch({
 	'when enum attribute is an array': schemaShouldBeValid(schemaValidEnum),
-	'when enum attribute is not an array': schemaShouldBeInvalid(schemaInvalidEnum)
+	'when enum attribute is not an array': schemaShouldBeInvalid(schemaInvalidEnum, { errMsg: 'Schema property \'prop\': \'enum\' attribute is an object when it should be an array' })
 }).export(module);
 	

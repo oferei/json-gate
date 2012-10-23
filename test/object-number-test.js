@@ -126,13 +126,13 @@ var schemaIncorrectDivisibleBy = {
 
 vows.describe('Object Number').addBatch({
 	'when complies with minimum': objectShouldBeValid(obj, schemaCorrectMinimum),
-	'when exceeds minimum': objectShouldBeInvalid(obj, schemaIncorrectMinimum),
+	'when exceeds minimum': objectShouldBeInvalid(obj, schemaIncorrectMinimum, { errMsg: 'JSON object property \'num\' is 108 when it should be at least 109' }),
 	'when complies with exclusive minimum': objectShouldBeValid(obj, schemaCorrectExclusiveMinimum),
-	'when exceeds exclusive minimum': objectShouldBeInvalid(obj, schemaIncorrectExclusiveMinimum),
+	'when exceeds exclusive minimum': objectShouldBeInvalid(obj, schemaIncorrectExclusiveMinimum, { errMsg: 'JSON object property \'num\' is 108 when it should be greater than 108' }),
 	'when complies with maximum': objectShouldBeValid(obj, schemaCorrectMaximum),
-	'when exceeds maximum': objectShouldBeInvalid(obj, schemaIncorrectMaximum),
+	'when exceeds maximum': objectShouldBeInvalid(obj, schemaIncorrectMaximum, { errMsg: 'JSON object property \'num\' is 108 when it should be at most 107' }),
 	'when complies with exclusive maximum': objectShouldBeValid(obj, schemaCorrectExclusiveMaximum),
-	'when exceeds exclusive maximum': objectShouldBeInvalid(obj, schemaIncorrectExclusiveMaximum),
+	'when exceeds exclusive maximum': objectShouldBeInvalid(obj, schemaIncorrectExclusiveMaximum, { errMsg: 'JSON object property \'num\' is 108 when it should be less than 108' }),
 	'when divisible by given divisor': objectShouldBeValid(obj, schemaCorrectDivisibleBy),
-	'when not divisible by given divisor': objectShouldBeInvalid(obj, schemaIncorrectDivisibleBy)
+	'when not divisible by given divisor': objectShouldBeInvalid(obj, schemaIncorrectDivisibleBy, { errMsg: 'JSON object property \'num\' is 108 when it should be divisible by 17' })
 }).export(module);

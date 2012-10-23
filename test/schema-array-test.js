@@ -126,15 +126,15 @@ vows.describe('Schema Array').addBatch({
 	'when items is a schema': schemaShouldBeValid(schemaValidItems),
 	'when items is a tuple': schemaShouldBeValid(schemaValidItemsTuple),
 	'when items is a tuple containing properties': schemaShouldBeValid(schemaValidItemsTupleWithProperties),
-	'when items is a string': schemaShouldBeInvalid(schemaInvalidItemsString),
-	'when items is an array': schemaShouldBeInvalid(schemaInvalidItemsArray),
-	'when items is an invalid schema': schemaShouldBeInvalid(schemaInvalidItemsInvalidSchema),
-	'when items array contains an invalid schema': schemaShouldBeInvalid(schemaInvalidItemsTupleWithInvalidProperties),
+	'when items is a string': schemaShouldBeInvalid(schemaInvalidItemsString, { errMsg: 'Schema: \'items\' attribute is a string when it should be either an object (schema) or an array' }),
+	'when items is an array with strings': schemaShouldBeInvalid(schemaInvalidItemsArray, { errMsg: 'Schema \'items\' attribute element 0 is not a valid schema: Schema is a string when it should be an object' }),
+	'when items is an invalid schema': schemaShouldBeInvalid(schemaInvalidItemsInvalidSchema, { errMsg: 'Schema \'items\' attribute is not a valid schema: Schema: \'type\' attribute is an integer when it should be either a string or an array' }),
+	'when items array contains an invalid schema': schemaShouldBeInvalid(schemaInvalidItemsTupleWithInvalidProperties, { errMsg: 'Schema \'items\' attribute element 2 is not a valid schema: Schema property \'num\': \'type\' attribute is an integer when it should be either a string or an array' }),
 	'when additionalItems is a valid schema': schemaShouldBeValid(schemaValidAdditionalItems),
-	'when additionalItems is an invalid schema': schemaShouldBeInvalid(schemaValidAdditionalItemsInvalidSchema),
+	'when additionalItems is an invalid schema': schemaShouldBeInvalid(schemaValidAdditionalItemsInvalidSchema, { errMsg: 'Schema \'additionalItems\' attribute is not a valid schema: Schema: \'type\' attribute is an integer when it should be either a string or an array' }),
 	'when additionalItems is false': schemaShouldBeValid(schemaValidNoAdditionalItems),
-	'when additionalItems is true': schemaShouldBeInvalid(schemaInvalidAdditionalItemsTrue),
+	'when additionalItems is true': schemaShouldBeInvalid(schemaInvalidAdditionalItemsTrue, { errMsg: 'Schema: \'additionalItems\' attribute is a boolean when it should be either an object (schema) or false' }),
 	'when additionalItems is provided although items is not a tuple': schemaShouldBeValid(schemaSuperfluousAdditionalItemsNonTuple),
 	'when uniqueItems is a boolean': schemaShouldBeValid(schemaValidUniqueItems),
-	'when uniqueItems is an integer': schemaShouldBeInvalid(schemaInvalidUniqueItems)
+	'when uniqueItems is an integer': schemaShouldBeInvalid(schemaInvalidUniqueItems, { errMsg: 'Schema: \'uniqueItems\' attribute is an integer when it should be a boolean' })
 }).export(module);

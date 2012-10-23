@@ -80,14 +80,14 @@ var schemaInvalidAdditionalPropertiesTrue = {
 
 vows.describe('Schema Object').addBatch({
 	'when properties is valid': schemaShouldBeValid(schemaValidProperties),
-	'when properties is not an object': schemaShouldBeInvalid(schemaInvalidPropertiesType),
-	'when properties is invalid': schemaShouldBeInvalid(schemaInvalidProperties),
+	'when properties is not an object': schemaShouldBeInvalid(schemaInvalidPropertiesType, { errMsg: 'Schema: \'properties\' attribute is an integer when it should be an object' }),
+	'when properties is invalid': schemaShouldBeInvalid(schemaInvalidProperties, { errMsg: 'Schema property \'obj.arr\': \'minItems\' attribute is a string when it should be an integer' }),
 	'when patternProperties is valid': schemaShouldBeValid(schemaValidPatternProperties),
-	'when patternProperties is not an object': schemaShouldBeInvalid(schemaInvalidPatternPropertiesType),
-	'when patternProperties is invalid': schemaShouldBeInvalid(schemaInvalidPatternPropertiesInvalidSchema),
+	'when patternProperties is not an object': schemaShouldBeInvalid(schemaInvalidPatternPropertiesType, { errMsg: 'Schema: \'patternProperties\' attribute is a string when it should be an object' }),
+	'when patternProperties is invalid': schemaShouldBeInvalid(schemaInvalidPatternPropertiesInvalidSchema, { errMsg: 'Schema property \'[0-9]\' is a string when it should be an object' }),
 	'when additionalProperties is a valid schema': schemaShouldBeValid(schemaValidAdditionalProperties),
-	'when additionalProperties is an invalid schema': schemaShouldBeInvalid(schemaInvalidNoAdditionalPropertiesInvalidSchema),
+	'when additionalProperties is an invalid schema': schemaShouldBeInvalid(schemaInvalidNoAdditionalPropertiesInvalidSchema, { errMsg: 'Schema \'additionalProperties\' attribute is not a valid schema: Schema: \'type\' attribute is an integer when it should be either a string or an array' }),
 	'when additionalProperties is false': schemaShouldBeValid(schemaValidNoAdditionalProperties),
-	'when additionalProperties is true': schemaShouldBeInvalid(schemaInvalidAdditionalPropertiesTrue)
+	'when additionalProperties is true': schemaShouldBeInvalid(schemaInvalidAdditionalPropertiesTrue, { errMsg: 'Schema: \'additionalProperties\' attribute is a boolean when it should be either an object (schema) or false' })
 }).export(module);
 

@@ -54,6 +54,8 @@ _json-gate_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/dr
         return res.send(400, err); // 400 Bad Request
     }
 
+This schema is explained below in the _Hello, schema_ section.
+
 ## Installation
 
     $ npm install json-gate
@@ -97,7 +99,7 @@ It should be noted that the JSON object passed to the callback function is the s
 It is only passed for convenience.
 Any _default_ values used will affect the original JSON object, even when calling asynchronously.
 
-## Hello schema
+## Hello, schema
 
 A _JSON schema_ is defined as a JavaScript object containing various _attributes_.
 
