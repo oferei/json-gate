@@ -11,10 +11,11 @@ _json-gate_ likes you! It is...
 
 * Intuitive - API is super easy to use.
 * Produces human-friendly, detailed error messages - for both you and your customers.
-* Conforms to standard - no relearning, no obligation, no surprises.
 * Well documented, in case you don't feel like digging into the IETF specifications.
 Just keep reading, it's all here.
+* Conforms to standard - no relearning, no obligation, no surprises.
 * Both synchronous and asynchronous modes - your choice.
+* Efficient - create a schema once, use it many times.
 
 ## What's a JSON schema?
 
@@ -343,9 +344,9 @@ The instance string must match it.
 
 Example:
 
-    mongodbId: {
+    youtubeVideoId: {
         type: 'string',
-        pattern: '[0-9A-Fa-f]{24}'
+        pattern: '^[A-Za-z0-9_-]{11}$'
     }
 
 ### minimum
