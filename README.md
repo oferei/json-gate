@@ -434,10 +434,15 @@ Example: `'color: red; background-color:#FFF'`.
 No hypens allows, only spaces.
 Example: `'(42) 123 4567'`.
 * uri - A string containing a URI.
+Example: `'https://github.com/oferei/json-gate'`.
 * email - A string containing an email address.
+Example: `'thepope@gmail.com'`.
 * ip-address - A string containing an ip version 4 address.
+Example: `'192.168.1.1'`.
 * ipv6 - A string containing an ip version 6 address.
+Example: `'2001:0db8:85a3:0042:0000:8a2e:0370:7334'`.
 * host-name - A string containing a host-name.
+Example: `'github.com'`.
 
 ### title
 
