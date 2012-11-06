@@ -219,7 +219,7 @@ Note: Properties are considered unordered, the order of the instance properties 
 Applies only to instances of type `'object'`.
 
 This attribute is similar to the _properties_ attribute, but the keys are regular expression patterns instead of property names.
-Any instance property whose name fits a pattern must be valid according to the appropriate schema.
+Any instance property whose name fits a pattern must be valid against the appropriate schema.
 
 Example:
 
@@ -244,7 +244,7 @@ Applies only to instances of type `'object'`.
 Defines a schema for all properties that are not explicitly defined by _properties_ and do not match any pattern in _patternProperties_.
 It can take one of two forms:
 
-* Schema - all the additional properties must be valid according to the schema.
+* Schema - all the additional properties must be valid against the schema.
 * False - additional properties are not allowed.
 
 Example:
@@ -267,6 +267,25 @@ The default is an empty schema, which allows any value for additional properties
 
 Applies only to instances of type `'object'`.
 
+This attribute is an object, matching properties to their requirements.
+If the instance object has a property with the same name as a property in the _dependencies_ attribute object,
+then the instance must comply with the requirement.
+
+The requirement can take one of three forms:
+
+* Simple dependency, single - a string.
+The instance object must have a property with the same name as the requirement.
+Example: `dependencies: { start: 'finish' }`.
+Means that if an instance has a property 'start', it must also have a property 'finish'.
+* Simple dependency, tuple - an array of strings.
+The instance object must have a property with the same name as each string in the requirement's array.
+Example: `dependencies: { towel: [ 'toothbrush', 'soap', 'space suit' ]}`.
+Means that if an instance has a property 'towel', it must also have properties 'toothbrush', 'soap' and 'space suit'.
+* Schema dependency - a schema.
+The instance object must be valid against the schema.
+Example: `dependencies: { 'cuba-libre': { properties: { glass: { format: 'highball', required: true }}}}`
+Means that if an instance has a property 'cuba-libre', it must also have a property 'glass', which has a 'highball' format.
+
 Not supported yet.
 
 ### items
@@ -276,7 +295,7 @@ Applies only to instances of type `'array'`.
 Defines the items of the instance array.
 It can take one of two forms:
 
-* Schema - all the items in the array must be valid according to the schema.
+* Schema - all the items in the array must be valid against the schema.
 * Tuple typing - an array of schemas.
 Each position in the instance array must conform to the schema in the corresponding position for this array.
 The instance array is not required to contain all defined items.
@@ -289,7 +308,7 @@ Applies only to instances of type `'array'`, and only together with the _tuple t
 _additionalItems_ defines the behavior when there are more items in the instance array than in the _items_ array.
 It can take one of two forms:
 
-* Schema - all the additional items must be valid according to the schema.
+* Schema - all the additional items must be valid against the schema.
 * False - additional items are not allowed.
 
 Example - a string, an integer and the rest are booleans:
