@@ -411,7 +411,33 @@ This value may not be 0.
 
 ### format
 
-Not supported yet.
+Applies only to instances of types `'string'`, `'number'` or `'integer'`.
+
+Defines the expected instance format.
+
+Available formats:
+* date-time - A string containing a date in ISO 8601 format of YYYY-MM-DDThh:mm:ssZ in UTC time.
+This is the recommended form of date/timestamp.
+Example: `'2012-11-06T09:13:24Z'`.
+* date - A string containing a date in the format of YYYY-MM-DD.
+Example: `'2012-11-06'`.
+* time - A string containing a time in the format of hh:mm:ss.
+Example: `'09:13:24'`.
+* utc-millisec - A number or an integer containing the number of milliseconds that have elapsed since midnight UTC, 1 January 1970.
+* regex - A string containing a regular expression, following the regular expression specification from ECMA 262.
+Example: `'^[0-9]{5}-[0-9]{4}$'`.
+* color - A string containing a CSS color (like "#FF0000" or "red"), based on CSS 2.1 [W3C.CR-CSS21-20070719].
+Example: `'rgb(64, 224, 208)'`.
+* style - A string containing a CSS style definition, based on CSS 2.1 [W3C.CR-CSS21-20070719].
+Example: `'color: red; background-color:#FFF'`.
+* phone - A string containing a national or international phone number, based on E.123.
+No hypens allows, only spaces.
+Example: `'(42) 123 4567'`.
+* uri - A string containing a URI.
+* email - A string containing an email address.
+* ip-address - A string containing an ip version 4 address.
+* ipv6 - A string containing an ip version 6 address.
+* host-name - A string containing a host-name.
 
 ### title
 
