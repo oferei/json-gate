@@ -9,6 +9,7 @@ Copy it to your API document and everybody should understand exactly what is exp
 
 _json-gate_ likes you! It is...
 
+* Fast - REALLY fast. Your CPU will not have time to blink.
 * Intuitive - API is super easy to use.
 * Produces human-friendly, detailed error messages - for both you and your customers.
 * Well documented, in case you don't feel like digging into the IETF specifications.
