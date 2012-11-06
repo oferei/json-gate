@@ -68,20 +68,20 @@ var schemaValidFormats = {
 	}
 };
 
+var schemaUnknownFormat = {
+	type: 'object',
+	properties: {
+		prop: {
+			format: 'my-format'
+		}
+	}
+};
+
 var schemaInvalidFormatType = {
 	type: 'object',
 	properties: {
 		seq: {
 			format: [1, 2, 3]
-		}
-	}
-};
-
-var schemaInvalidFormat = {
-	type: 'object',
-	properties: {
-		familiar: {
-			format: 'turtle'
 		}
 	}
 };
@@ -108,8 +108,8 @@ var schemaInvalidTypeMs = {
 
 vows.describe('Schema String').addBatch({
 	'when formats are valid': schemaShouldBeValid(schemaValidFormats),
+	'when format is unknown': schemaShouldBeValid(schemaUnknownFormat),
 	'when format is not a string': schemaShouldBeInvalid(schemaInvalidFormatType, { errMsg: 'Schema property \'seq\': \'format\' attribute is an array when it should be a string' }),
-	'when format is invalid': schemaShouldBeInvalid(schemaInvalidFormat, { errMsg: 'Schema property \'familiar\': \'format\' attribute is not one of the predefined formats' }),
 	'when \'ip-address\' format is applied to the wrong type': schemaShouldBeInvalid(schemaInvalidTypeIp, { errMsg: 'Schema property \'ip\': \'type\' attribute does not conform to the \'ip-address\' format' }),
 	'when \'utc-millisec\' format is applied to the wrong type': schemaShouldBeInvalid(schemaInvalidTypeMs, { errMsg: 'Schema property \'ms\': \'type\' attribute does not conform to the \'utc-millisec\' format' })
 }).export(module);

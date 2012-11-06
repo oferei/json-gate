@@ -284,6 +284,21 @@ var schemaHost = {
 	}
 };
 
+var objProprietary = {
+	prop: 'la la la'
+};
+
+var schemaProprietary = {
+	type: 'object',
+	properties: {
+		prop: {
+			type: 'string',
+			format: 'my-format',
+			required: true
+		}
+	}
+};
+
 vows.describe('Object String').addBatch({
 	'when a date-time is passed for a date-time': objectShouldBeValid(objDateTime, schemaDateTime),
 	'when trying to pass a date for a date-time': objectShouldBeInvalid(objInvalidDateTime, schemaDateTime, { errMsg: 'JSON object property \'dateTime\' does not conform to the \'date-time\' format' }),
@@ -315,5 +330,6 @@ vows.describe('Object String').addBatch({
 	'when an ipv6 is passed for an ipv6': objectShouldBeValid(objIp6, schemaIp6),
 	'when trying to pass a host-name for an ipv6': objectShouldBeInvalid(objInvalidIp6, schemaIp6, { errMsg: 'JSON object property \'ip6\' does not conform to the \'ipv6\' format' }),
 	'when a host-name is passed for a host-name': objectShouldBeValid(objHost, schemaHost),
-	'when trying to pass a date-time for a host-name': objectShouldBeInvalid(objInvalidHost, schemaHost, { errMsg: 'JSON object property \'host\' does not conform to the \'host-name\' format' })
+	'when trying to pass a date-time for a host-name': objectShouldBeInvalid(objInvalidHost, schemaHost, { errMsg: 'JSON object property \'host\' does not conform to the \'host-name\' format' }),
+	'when format is unknown': objectShouldBeValid(objProprietary, schemaProprietary)
 }).export(module);
