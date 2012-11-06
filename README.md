@@ -15,7 +15,6 @@ _json-gate_ likes you! It is...
 Just keep reading, it's all here.
 * Conforms to standard - no relearning, no obligation, no surprises.
 * Both synchronous and asynchronous modes - your choice.
-* Efficient - create a schema once, use it many times.
 
 ## What's a JSON schema?
 
