@@ -416,6 +416,7 @@ Applies only to instances of types `'string'`, `'number'` or `'integer'`.
 Defines the expected instance format.
 
 Available formats:
+
 * date-time - A string containing a date in ISO 8601 format of YYYY-MM-DDThh:mm:ssZ in UTC time.
 This is the recommended form of date/timestamp.
 Example: `'2012-11-06T09:13:24Z'`.
