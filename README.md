@@ -212,7 +212,7 @@ Example:
 
 The default is an empty object.
 
-Note: properties are considered unordered, the order of the instance properties may be in any order.
+Note: Properties are considered unordered, the order of the instance properties may be in any order.
 
 ### patternProperties
 
@@ -445,6 +445,8 @@ Example: `'192.168.1.1'`.
 Example: `'2001:0db8:85a3:0042:0000:8a2e:0370:7334'`.
 * host-name - A string containing a host-name.
 Example: `'github.com'`.
+
+Note: Unknown formats are silently ignored.
 
 ### title
 
