@@ -429,7 +429,7 @@ Example: `'^[0-9]{5}-[0-9]{4}$'`.
 * color - A string containing a CSS color, based on CSS 2.1 [W3C.CR-CSS21-20070719].
 Examples: `'red'`, `'#FF9900'`, `'f90'`, `'rgb(64, 224, 208)'`, `'rgb(100%, 0%, 25%)'`.
 * style - A string containing a CSS style definition, based on CSS 2.1 [W3C.CR-CSS21-20070719].
-Example: `'color: red; background-color:#FFF'`.
+Example: `'color: red; background-color:#FFF'`. This format is support, but not implemented yet. Currently any string passes validation.
 * phone - A string containing a national or international phone number, based on E.123.
 No hypens allows, only spaces.
 Examples: `'(42) 123 4567'`, `'+31 42 123 4567'`.
