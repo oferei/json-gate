@@ -1,7 +1,7 @@
 {
   "name": "json-gate",
   "description": "A friendly, fast JSON schema validator",
-  "version": "0.8.14",
+  "version": "0.8.15",
   "author": {
     "name": "Ofer Reichman",
     "email": "oferei@gmail.com"
@@ -34,7 +34,8 @@
   },
   "devDependencies": {
     "should": "*",
-    "vows": "*"
+    "vows": "*",
+    "JSV": "*"
   },
   "engines": {
     "node": "*"

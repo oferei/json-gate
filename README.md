@@ -9,9 +9,9 @@ Copy it to your API document and everybody should understand exactly what is exp
 
 _json-gate_ likes you! It is...
 
-* Fast - REALLY fast. Your CPU will not have time to blink.
 * Intuitive - API is super easy to use.
 * Produces human-friendly, detailed error messages - for both you and your customers.
+* Fast - Your CPU won't have time to blink.
 * Well documented, in case you don't feel like digging into the IETF specifications.
 Just keep reading, it's all here.
 * Conforms to standard - no relearning, no obligation, no surprises.
@@ -412,7 +412,7 @@ This value may not be 0.
 
 ### format
 
-Applies only to instances of types `'string'`, `'number'` or `'integer'`.
+Applies only to instances of types `'string'` or `'number'`.
 
 Defines the expected instance format.
 
