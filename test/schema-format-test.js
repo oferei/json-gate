@@ -106,7 +106,7 @@ var schemaInvalidTypeMs = {
 	}
 };
 
-vows.describe('Schema String').addBatch({
+vows.describe('Schema Format').addBatch({
 	'when formats are valid': schemaShouldBeValid(schemaValidFormats),
 	'when format is unknown': schemaShouldBeValid(schemaUnknownFormat),
 	'when format is not a string': schemaShouldBeInvalid(schemaInvalidFormatType, { errMsg: 'Schema property \'seq\': \'format\' attribute is an array when it should be a string' }),

@@ -299,7 +299,7 @@ var schemaProprietary = {
 	}
 };
 
-vows.describe('Object String').addBatch({
+vows.describe('Object Format').addBatch({
 	'when a date-time is passed for a date-time': objectShouldBeValid(objDateTime, schemaDateTime),
 	'when trying to pass a date for a date-time': objectShouldBeInvalid(objInvalidDateTime, schemaDateTime, { errMsg: 'JSON object property \'dateTime\' does not conform to the \'date-time\' format' }),
 	'when a date is passed for a date': objectShouldBeValid(objDate, schemaDate),
