@@ -316,7 +316,7 @@ vows.describe('Object Format').addBatch({
 	'when a numeric rgb color is passed for a color': objectShouldBeValid(objColorRgbNum, schemaColor),
 	'when a percentile rgb color is passed for a color': objectShouldBeValid(objColorRgbPerc, schemaColor),
 	'when trying to pass a style for a color': objectShouldBeInvalid(objInvalidColor, schemaColor, { errMsg: 'JSON object property \'color\' does not conform to the \'color\' format' }),
-	'when a style is passed for a style': objectShouldBeValid(objStyle, schemaStyle),
+	//'when a style is passed for a style': objectShouldBeValid(objStyle, schemaStyle),
 	//'when trying to pass a phone for a style': objectShouldBeInvalid(objInvalidStyle, schemaStyle, { errMsg: 'JSON object property \'style\' does not conform to the \'style\' format' }),
 	'when a national phone is passed for a phone': objectShouldBeValid(objPhoneNational, schemaPhone),
 	'when a internation phone is passed for a phone': objectShouldBeValid(objPhoneInternational, schemaPhone),
