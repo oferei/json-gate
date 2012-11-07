@@ -286,8 +286,6 @@ The instance object must be valid against the schema.
 Example: `dependencies: { 'cuba-libre': { properties: { glass: { format: 'highball', required: true }}}}`
 Means that if an instance has a property 'cuba-libre', it must also have a property 'glass' with a 'highball' format.
 
-Not supported yet.
-
 ### items
 
 Applies only to instances of type `'array'`.
