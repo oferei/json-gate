@@ -273,11 +273,11 @@ then the instance must comply with the requirement.
 
 The requirement can take one of three forms:
 
-* Simple dependency, single - a string.
+* Simple dependency - a string.
 The instance object must have a property with the same name as the requirement.
 Example: `dependencies: { start: 'finish' }`.
 Means that if an instance has a property 'start', it must also have a property 'finish'.
-* Simple dependency, tuple - an array of strings.
+* Simple dependency tuple - an array of strings.
 The instance object must have a property with the same name as each string in the requirement's array.
 Example: `dependencies: { towel: [ 'toothbrush', 'soap', 'space suit' ]}`.
 Means that if an instance has a property 'towel', it must also have properties 'toothbrush', 'soap' and 'space suit'.
