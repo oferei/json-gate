@@ -137,8 +137,6 @@ Example - instance should be either a string or null:
 
 The default is 'any'.
 
-Note: The top level JSON object's _type_ must be either 'object' or 'array'.
-
 ### disallow
 
 Defines the disallowed instance type. This is the opposite of _type_.
