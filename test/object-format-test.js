@@ -10,6 +10,14 @@ var objDateTime = {
 	dateTime: '2012-11-06T09:13:24Z'
 };
 
+var objDateTimeFractionDot = {
+	dateTime: '2012-11-06T09:13:24.142857Z'
+};
+
+var objDateTimeFractionComma = {
+	dateTime: '2012-11-06T09:13:24,142857Z'
+};
+
 var objInvalidDateTime = {
 	dateTime: '2012-11-06'
 };
@@ -300,6 +308,9 @@ var schemaProprietary = {
 };
 
 vows.describe('Object Format').addBatch({
+	'when a date-time is passed for a date-time': objectShouldBeValid(objDateTime, schemaDateTime),
+	'when a date-time with a dot fraction is passed for a date-time': objectShouldBeValid(objDateTimeFractionDot, schemaDateTime),
+	'when a date-time with a comma fraction is passed for a date-time': objectShouldBeValid(objDateTimeFractionComma, schemaDateTime),
 	'when a date-time is passed for a date-time': objectShouldBeValid(objDateTime, schemaDateTime),
 	'when trying to pass a date for a date-time': objectShouldBeInvalid(objInvalidDateTime, schemaDateTime, { errMsg: 'JSON object property \'dateTime\' does not conform to the \'date-time\' format' }),
 	'when a date is passed for a date': objectShouldBeValid(objDate, schemaDate),

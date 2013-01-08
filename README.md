@@ -433,8 +433,8 @@ Defines the expected instance format.
 
 Available formats:
 
-* date-time - A string containing a date in ISO 8601 format of YYYY-MM-DDThh:mm:ssZ in UTC time.
-This is the recommended form of date/timestamp.
+* date-time - A string containing a date in ISO 8601 format of YYYY-MM-DDThh:mm:ss[.fraction]Z in UTC time.
+The decimal fraction is optional and the decimal dot can be replaced with a comma.
 Example: `'2012-11-06T09:13:24Z'`.
 * date - A string containing a date in the format of YYYY-MM-DD.
 Example: `'2012-11-06'`.
