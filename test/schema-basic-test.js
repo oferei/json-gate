@@ -32,7 +32,6 @@ vows.describe('Schema Basic').addBatch({
 	'when schema is not an object': schemaShouldBeInvalid(schemaNotAnObject, { errMsg: 'Schema is a string when it should be an object' }),
 	'when type attribue is missing': schemaShouldBeInvalid(schemaWithoutType, { errMsg: 'Schema: \'type\' is required' }),
 	'when type attribute is not a string': schemaShouldBeInvalid(schemaInvalidType, { errMsg: 'Schema: \'type\' attribute is an integer when it should be a string' }),
-	'when type attribute is neither \'object\' nor \'array\'': schemaShouldBeInvalid(schemaInappropriateType, { errMsg: 'Schema: \'type\' is \'string\' when it should be either \'object\' or \'array\'' }),
 	'when type attribute is \'object\'': schemaShouldBeValid(schemaEmptyObject),
 	'when type attribute is \'array\'': schemaShouldBeValid(schemaEmptyArray)
 }).export(module);
