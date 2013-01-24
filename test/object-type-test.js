@@ -118,7 +118,7 @@ var schemaAny = {
 	}
 };
 
-var schemaBroken = {
+var schemaUnknownType = {
 	type: 'object',
 	properties: {
 		val: {
@@ -145,5 +145,5 @@ vows.describe('Object Type').addBatch({
 	'when null is passed for null': objectShouldBeValid(objNull, schemaNull),
 	'when trying to pass a boolean for null': objectShouldBeInvalid(objBoolean, schemaNull, { errMsg: 'JSON object property \'val\' is a boolean when it should be null' }),
 	'when a string is passed for any': objectShouldBeValid(objAny, schemaAny),
-	'when a string is passed for unknown type': objectShouldBeInvalid(objAny, schemaBroken, 'unsupported type unknown')
+	'when a string is passed for unknown type': objectShouldBeValid(objAny, schemaUnknownType)
 }).export(module);
