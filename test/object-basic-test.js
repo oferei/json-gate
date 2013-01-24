@@ -10,7 +10,7 @@ var schemaSimple = {
 	type: 'string'
 };
 
-vows.describe('Object Default').addBatch({
+vows.describe('Object Basic').addBatch({
 	'when calling without an object': {
 		topic: function () {
 			var schema = createSchema(schemaSimple);
@@ -21,9 +21,8 @@ vows.describe('Object Default').addBatch({
 				this.callback(err);
 			}
 		},
-		'we get an error': function (err, result) {
-			should.exist(err);
-			err.should.have.property('message', 'JSON object is undefined');
+		'we get no error': function (err, result) {
+			should.not.exist(err);
 			should.not.exist(result);
 		}
 	}
