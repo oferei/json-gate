@@ -118,6 +118,16 @@ var schemaAny = {
 	}
 };
 
+var schemaBroken = {
+	type: 'object',
+	properties: {
+		val: {
+			type: 'unknown',
+			required: true
+		}
+	}
+};
+
 vows.describe('Object Type').addBatch({
 	'when a string is passed for a string': objectShouldBeValid(objString, schemaString),
 	'when trying to pass a number for a string': objectShouldBeInvalid(objNumber, schemaString, { errMsg: 'JSON object property \'val\' is a number when it should be a string' }),
@@ -134,5 +144,6 @@ vows.describe('Object Type').addBatch({
 	'when trying to pass an object for an array': objectShouldBeInvalid(objObject, schemaArray, { errMsg: 'JSON object property \'val\' is an object when it should be an array' }),
 	'when null is passed for null': objectShouldBeValid(objNull, schemaNull),
 	'when trying to pass a boolean for null': objectShouldBeInvalid(objBoolean, schemaNull, { errMsg: 'JSON object property \'val\' is a boolean when it should be null' }),
-	'when a string is passed for any': objectShouldBeValid(objAny, schemaAny)
+	'when a string is passed for any': objectShouldBeValid(objAny, schemaAny),
+	'when a string is passed for unknown type': objectShouldBeInvalid(objAny, schemaBroken, 'unsupported type unknown')
 }).export(module);
