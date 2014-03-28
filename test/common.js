@@ -98,7 +98,7 @@ exports.objectShouldBeInvalid = function (obj, schemaDef, options) {
 	return context;
 };
 
-exports.objectShouldBeSanitize = function (obj, schemaDef, objNested, options) {
+exports.objectShouldBeEquals = function (obj, objNested, schemaDef, options) {
 	var context = {
 		topic: function () {
 			var schema = createSchema(schemaDef);

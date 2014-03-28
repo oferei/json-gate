@@ -5,7 +5,7 @@ var vows = require('vows');
 var common = require('./common'),
 	objectShouldBeValid = common.objectShouldBeValid,
 	objectShouldBeInvalid = common.objectShouldBeInvalid,
-	objectShouldBeSanitize = common.objectShouldBeSanitize;
+	objectShouldBeEquals = common.objectShouldBeEquals;
 
 var objNested = {
 	str: 'top',
@@ -109,12 +109,13 @@ var objAdditionalArray = {
 	extra: [42]
 };
 
-var objSanitize = {
+var objAdditionalPropertiesRemove = {
 	str: 'hi',
-	extra: 'discard data'
+	extra: 'discard data',
+	other: 'discard too'
 };
 
-var objNestedSanitize = {
+var objNestedAdditionalPropertiesRemove = {
 	str: 'hi'
 };
 
@@ -140,12 +141,12 @@ var schemaAdditionalPropertiesInteger = {
 	additionalProperties: { type: 'integer' }
 };
 
-var schemaSanitize = {
+var schemaAdditionalPropertiesRemove = {
 	type: 'object',
 	properties: {
 		str: { type: 'string' }
 	},
-	sanitize: true
+	additionalProperties: 'remove'
 };
 
 vows.describe('Object Object').addBatch({
@@ -158,5 +159,5 @@ vows.describe('Object Object').addBatch({
 	'when no additional properties is not respected': objectShouldBeInvalid(objAdditionalInteger, schemaNoAdditionalProperties, { errMsg: 'JSON object property \'extra\' is not explicitly defined and therefore not allowed' }),
 	'when additional property is correct type': objectShouldBeValid(objAdditionalInteger, schemaAdditionalPropertiesInteger),
 	'when additional property is wrong type': objectShouldBeInvalid(objAdditionalArray, schemaAdditionalPropertiesInteger, { errMsg: 'JSON object property \'extra\' is an array when it should be an integer' }),
-	'when sanitize is respected': objectShouldBeSanitize(objSanitize, schemaSanitize, objNestedSanitize)
+	'when additional property remove is respected': objectShouldBeEquals(objAdditionalPropertiesRemove, objNestedAdditionalPropertiesRemove, schemaAdditionalPropertiesRemove)
 }).export(module);

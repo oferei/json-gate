@@ -76,7 +76,7 @@ If the JSON object does not conform to the schema an error will be thrown (or re
 
 The functions stops after encountering an error. It does not return multiple errors.
 The function return a JSON object.
-Be aware that the input JSON object may be edited _in-place_ if the _default_ or _sanitize_ attribute is used.
+Be aware that the input JSON object may be edited _in-place_ if the _default_ attribute is used or when _additionalProperties_ attribute is defined by 'remove'.
 
 ### Errors
 
@@ -244,6 +244,7 @@ It can take one of two forms:
 
 * Schema - all the additional properties must be valid against the schema.
 * False - additional properties are not allowed.
+* 'remove' - remove all non-matching properties from original JSON object.
 
 Example:
 
@@ -260,15 +261,6 @@ Example:
     }
 
 The default is an empty schema, which allows any value for additional properties.
-
-### sanitize
-
-Applies only to instances of type `'object'`.
-
-Filters an non-matching properties and deletes from the object. Sanitize looks like additionalProperties, but it doesn't throws an error.
-If the object contains attributes that are not found in schema, "sanitize" will remove them from the object.
-
-`sanitize: true`
 
 ### dependencies
 
