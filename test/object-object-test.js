@@ -4,7 +4,8 @@ var vows = require('vows');
 
 var common = require('./common'),
 	objectShouldBeValid = common.objectShouldBeValid,
-	objectShouldBeInvalid = common.objectShouldBeInvalid;
+	objectShouldBeInvalid = common.objectShouldBeInvalid,
+	objectShouldBeEquals = common.objectShouldBeEquals;
 
 var objNested = {
 	str: 'top',
@@ -108,6 +109,16 @@ var objAdditionalArray = {
 	extra: [42]
 };
 
+var objAdditionalPropertiesRemove = {
+	str: 'hi',
+	extra: 'discard data',
+	other: 'discard too'
+};
+
+var objNestedAdditionalPropertiesRemove = {
+	str: 'hi'
+};
+
 var schemaNoAdditionalProperties = {
 	type: 'object',
 	properties: {
@@ -130,6 +141,14 @@ var schemaAdditionalPropertiesInteger = {
 	additionalProperties: { type: 'integer' }
 };
 
+var schemaAdditionalPropertiesRemove = {
+	type: 'object',
+	properties: {
+		str: { type: 'string' }
+	},
+	additionalProperties: 'remove'
+};
+
 vows.describe('Object Object').addBatch({
 	'when nested object is valid': objectShouldBeValid(objNested, schemaNested),
 	'when nested object is missing a property': objectShouldBeInvalid(objNestedMissing, schemaNested, { errMsg: 'JSON object property \'obj1.obj2.obj3.str\' is required' }),
@@ -139,5 +158,6 @@ vows.describe('Object Object').addBatch({
 	'when no additional properties is respected': objectShouldBeValid(objNoAdditional, schemaNoAdditionalProperties),
 	'when no additional properties is not respected': objectShouldBeInvalid(objAdditionalInteger, schemaNoAdditionalProperties, { errMsg: 'JSON object property \'extra\' is not explicitly defined and therefore not allowed' }),
 	'when additional property is correct type': objectShouldBeValid(objAdditionalInteger, schemaAdditionalPropertiesInteger),
-	'when additional property is wrong type': objectShouldBeInvalid(objAdditionalArray, schemaAdditionalPropertiesInteger, { errMsg: 'JSON object property \'extra\' is an array when it should be an integer' })
+	'when additional property is wrong type': objectShouldBeInvalid(objAdditionalArray, schemaAdditionalPropertiesInteger, { errMsg: 'JSON object property \'extra\' is an array when it should be an integer' }),
+	'when additional property remove is respected': objectShouldBeEquals(objAdditionalPropertiesRemove, objNestedAdditionalPropertiesRemove, schemaAdditionalPropertiesRemove)
 }).export(module);

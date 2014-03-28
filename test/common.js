@@ -97,3 +97,20 @@ exports.objectShouldBeInvalid = function (obj, schemaDef, options) {
 	};
 	return context;
 };
+
+exports.objectShouldBeEquals = function (obj, objNested, schemaDef, options) {
+	var context = {
+		topic: function () {
+			var schema = createSchema(schemaDef);
+			schema.validate(obj, this.callback);
+		}
+	};
+	var vow = (options && options.vow) || 'we got an error';
+	context[vow] = function (err, result) {
+		should.not.exist(err);
+		should.exist(result);
+		JSON.stringify(result).should.equal(JSON.stringify(objNested));
+		if (options && options.post) { options.post(err, result); }
+	};
+	return context;
+};
