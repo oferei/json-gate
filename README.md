@@ -75,8 +75,8 @@ This function gets a JSON object and validates it against the schema.
 If the JSON object does not conform to the schema an error will be thrown (or returned, see _Synchronous/Asynchronous_ below).
 
 The functions stops after encountering an error. It does not return multiple errors.
-The function does not return a value.
-Be aware that the input JSON object may be edited _in-place_ if the _default_ attribute is used.
+The function return a JSON object.
+Be aware that the input JSON object may be edited _in-place_ if the _default_ or _sanitize_ attribute is used.
 
 ### Errors
 
@@ -92,7 +92,7 @@ For example: "Schema property 'num': 'exclusiveMaximum' attribute is a number wh
 _Schema.validate_ can be called in two ways, to suit your needs:
 
 * Synchronously - as in the example above, with one parameter.
-As already stated, it returns nothing if the object checks out. Otherwise it throws an error.
+As already stated, it returns JSON object if the object checks out. Otherwise it throws an error.
 * Asynchronously - by providing a 2nd parameter: a callback function.
 The callback function gets two arguments: error and result (the original JSON object, which may be modified).
 
@@ -260,6 +260,15 @@ Example:
     }
 
 The default is an empty schema, which allows any value for additional properties.
+
+### sanitize
+
+Applies only to instances of type `'object'`.
+
+Filters an non-matching properties and deletes from the object. Sanitize looks like additionalProperties, but it doesn't throws an error.
+If the object contains attributes that are not found in schema, "sanitize" will remove them from the object.
+
+`sanitize: true`
 
 ### dependencies
 
