@@ -138,6 +138,14 @@ var objInvalidHost = {
 	host: '2012-11-06T09:13:24Z'
 };
 
+var objCreditCard = {
+	ccNumber: '4563960122001999'
+};
+
+var objInvalidCreditCard = {
+	ccNumber: '4563960122001000'
+};
+
 var schemaDateTime = {
 	type: 'object',
 	properties: {
@@ -292,6 +300,17 @@ var schemaHost = {
 	}
 };
 
+var schemaCreditCard = {
+	type: 'object',
+	properties: {
+		ccNumber: {
+			type: 'string',
+			format: 'creditcard',
+			required: true
+		}
+	}
+};
+
 var objProprietary = {
 	prop: 'la la la'
 };
@@ -342,5 +361,7 @@ vows.describe('Object Format').addBatch({
 	'when trying to pass a host-name for an ipv6': objectShouldBeInvalid(objInvalidIp6, schemaIp6, { errMsg: 'JSON object property \'ip6\' does not conform to the \'ipv6\' format' }),
 	'when a host-name is passed for a host-name': objectShouldBeValid(objHost, schemaHost),
 	'when trying to pass a date-time for a host-name': objectShouldBeInvalid(objInvalidHost, schemaHost, { errMsg: 'JSON object property \'host\' does not conform to the \'host-name\' format' }),
-	'when format is unknown': objectShouldBeValid(objProprietary, schemaProprietary)
+	'when format is unknown': objectShouldBeValid(objProprietary, schemaProprietary),
+	'when a valid creditcard number is passed for a creditcard': objectShouldBeValid(objCreditCard, schemaCreditCard),
+	'when a invalid creditcard number is passed for a creditcard': objectShouldBeInvalid(objInvalidCreditCard, schemaCreditCard),
 }).export(module);

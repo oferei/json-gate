@@ -458,6 +458,8 @@ Example: `'192.168.1.1'`.
 Example: `'2001:0db8:85a3:0042:0000:8a2e:0370:7334'`.
 * host-name - A string containing a host-name.
 Example: `'github.com'`.
+* creditcard - A string containing a valid credit card number (check using Luhn algorithm).
+Example: `'1234567890123456'`.
 
 Note: Unknown formats are silently ignored.
 
