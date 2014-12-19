@@ -172,7 +172,7 @@ vows.describe('Benchmark').addBatch({
 			should.not.exist(err);
 			should.exist(result);
 			result.should.not.be.instanceof(Error); // can't trust vows
-			result.should.be.a('number');
+			result.should.be.a.Number;
 			if (result > 1) {
 				console.log('json-gate is', round3(result), 'times faster than JSV');
 			} else {
@@ -233,7 +233,7 @@ vows.describe('Benchmark').addBatch({
 			should.not.exist(err);
 			should.exist(result);
 			result.should.not.be.instanceof(Error); // can't trust vows
-			result.should.be.a('number');
+			result.should.be.a.Number;
 			if (result > 1) {
 				console.log('json-gate is', round3(result), 'times faster than JSV');
 			} else {
