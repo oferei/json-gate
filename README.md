@@ -102,18 +102,19 @@ Any _default_ values used will affect the original JSON object, even when callin
 
 ## Hello, schema
 
-A _JSON schema_ is defined as a JavaScript object containing various _attributes_.
+A _JSON schema_ is defined using a JavaScript object containing various _attributes_.
 
 Let's start by analyzing the schema given in the example above.
+What does it say about the JSON object?
 
 * The JSON object should be an object (as opposed to an array).
-* It should have a property named _query_, which should be a string with 1 to 64 characters.
+* It should have a property named _query_, which should be a string of 1 to 64 characters.
 * It may optionaly have a property named _maxResults_, which should be an integer with a maximum value of 20.
 * If _maxResults_ is missing, it will be generated with a value of 10.
 * Additional properties (other than _query_ and _maxResults_) are not allowed.
 
-JSON Schema properties can be nested: objects and arrays include other attributes, which may be objects and arrays.
-Notice that objects properties are unordered, whereas array items are ordered.
+JSON Schema properties can be nested: objects and arrays include other attributes, which may themselves be objects and arrays.
+Notice that objects' properties are unordered, whereas array items are ordered.
 
 See Attributes section below to learn about more possibilities.
 
