@@ -84,7 +84,7 @@ The error messages are human-friendly and detailed.
 For example: "JSON object property 'user.password': length is 3 when it should be at least 6".
 Ready to be shrink-wrapped in a _400 Bad Request_ response and shipped to the client!
 
-Equaly helpful error message are produced in the case of a malformed schema, to assist you during development.
+Equaly helpful error messages are produced in the case of a malformed schema, to assist you during development.
 For example: "Schema property 'num': 'exclusiveMaximum' attribute is a number when it should be a boolean".
 
 ### Synchronous/Asynchronous
