@@ -74,7 +74,7 @@ If the latter is malformed an error will be thrown pinpointing the problem.
 This function gets a JSON object and validates it against the schema.
 If the JSON object does not conform to the schema an error will be thrown (or returned, see _Synchronous/Asynchronous_ below).
 
-The functions stops after encountering an error. It does not return multiple errors.
+The function stops after encountering an error. It does not return multiple errors.
 The function does not return a value.
 Be aware that the input JSON object may be edited _in-place_ if the _default_ attribute is used.
 
