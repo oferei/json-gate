@@ -224,7 +224,7 @@ Example:
 
     {
         type: 'object',
-        properties: {
+        patternProperties: {
             '^sz': { type: 'string' },
             '^n': { type: 'number' },
             '^b': { type: 'boolean' }
