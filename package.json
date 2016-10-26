@@ -1,7 +1,7 @@
 {
   "name": "json-gate",
   "description": "A friendly, fast JSON schema validator",
-  "version": "0.8.22",
+  "version": "0.8.23",
   "author": {
     "name": "Ofer Reichman",
     "email": "oferei@gmail.com"
@@ -52,10 +52,5 @@
   "engines": {
     "node": "*"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://raw.github.com/oferei/json-gate/master/LICENSE"
-    }
-  ]
+  "license": "MIT"
 }
