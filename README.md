@@ -285,6 +285,15 @@ The instance object must be valid against the schema.
 Example: `dependencies: { 'cuba-libre': { properties: { glass: { format: 'highball', required: true }}}}`
 Means that if an instance has a property 'cuba-libre', it must also have a property 'glass' with a 'highball' format.
 
+### atLeastOne
+
+Applies only to instances of type `'object'`
+
+This attribute is an array, matching properties to their requirements.
+It seems the depedencies attribute, but the difference is that at least one attribute of the object exists.
+Example: `atLeastOne: ['github', facebook', 'twitter']`.
+Means that it is necessary to have at least one attribute among the 3 informed.
+
 ### items
 
 Applies only to instances of type `'array'`.
