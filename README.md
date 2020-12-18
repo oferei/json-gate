@@ -36,8 +36,8 @@ _json-gate_ supports most of [JSON Schema Draft 3](http://tools.ietf.org/html/dr
     	properties: {
     		query: {
     			type: 'string',
-                minLength: 1,
-                maxLength: 64,
+    			minLength: 1,
+    			maxLength: 64,
     			required: true
     		},
     		maxResults: {
